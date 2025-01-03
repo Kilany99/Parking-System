@@ -3,11 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "parking-system-client": {
+    "park-sys-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+          
+          
         }
       },
       "root": "",
@@ -17,7 +19,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/parking-system-client",
+            "outputPath": "dist/park-sys-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -32,7 +34,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@progress/kendo-theme-default/dist/all.css"
+
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -69,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "parking-system-client:build:production"
+              "buildTarget": "park-sys-client:build:production"
             },
             "development": {
-              "buildTarget": "parking-system-client:build:development"
+              "buildTarget": "park-sys-client:build:development"
             }
           },
           "defaultConfiguration": "development"
