@@ -16,7 +16,7 @@ private tokenKey = 'token';
 private authStatusListener = new BehaviorSubject<boolean>(this.isLoggedIn());
 
 
-constructor(private http: HttpClient, private router: Router) { }
+constructor(private http: HttpClient) { }
 
 get authStatus$(): Observable<boolean> {
     return this.authStatusListener.asObservable();

@@ -36,7 +36,7 @@ export class LoginComponent {
         },
         (error) => {
           // Handle error
-          this.errorMessage = 'An error occurred during login';
+          this.errorMessage = 'An error occurred during login'+ error.message;
         }
       );
     }
