@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable ,Inject,PLATFORM_ID} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthResponseDto,LoginDto, RegisterDto } from '../../../models/DTOs/auth.dto';
 import { Environment } from '../../../../environments/environment';
-import { Router } from 'express';
+import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
 providedIn: 'root'
@@ -14,9 +15,20 @@ export class AuthService {
 private apiUrl = Environment.apiUrl;
 private tokenKey = 'token';
 private authStatusListener = new BehaviorSubject<boolean>(this.isLoggedIn());
+private isBrowser: boolean;
+constructor(
+  private http: HttpClient,
+  private router: Router,
+  @Inject(PLATFORM_ID) private platformId: Object
+) {
+  this.isBrowser = isPlatformBrowser(this.platformId);
 
-
-constructor(private http: HttpClient) { }
+  if (this.isBrowser) {
+    this.authStatusListener = new BehaviorSubject<boolean>(this.isLoggedIn());
+  } else {
+    this.authStatusListener = new BehaviorSubject<boolean>(false);
+  }
+}
 
 get authStatus$(): Observable<boolean> {
     return this.authStatusListener.asObservable();
@@ -49,15 +61,21 @@ get authStatus$(): Observable<boolean> {
     );
   }
 
-setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-}
+  setToken(token: string): void {
+    if (this.isBrowser) {
+      localStorage.setItem(this.tokenKey, token);
+    }
+  }
 
 getToken(): string | null {
+  if (this.isBrowser) {
     return localStorage.getItem(this.tokenKey);
+  }
+  return null;
 }
 
 removeToken(): void {
+    if(this.isBrowser)
     localStorage.removeItem(this.tokenKey);
 }
 refreshToken(): Observable<AuthResponseDto> {
@@ -80,23 +98,28 @@ refreshToken(): Observable<AuthResponseDto> {
 
 
   isLoggedIn(): boolean {
-    const token = this.getToken();
-    if (token) {
-      return !this.isTokenExpired(token);
+    if (this.isBrowser) {
+      const token = this.getToken();
+      if (token) {
+        return !this.isTokenExpired(token);
+      }
     }
     return false;
   }
 
   getDecodedToken(): any {
-    const token = this.getToken();
-    if (token) {
-      return jwtDecode(token);
+    if (this.isBrowser) {
+      const token = this.getToken();
+      if (token) {
+        return jwtDecode(token);
+      } 
     }
     return null;
   }
-logout(): void {
+  logout(): void {
     this.removeToken();
-}
+    this.authStatusListener.next(false);
+  }
 private isTokenExpired(token: string): boolean {
     const decoded = jwtDecode<any>(token);
     if (decoded && decoded.exp) {

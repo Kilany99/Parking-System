@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { RegisterDto } from '../../../../models/DTOs/auth.dto';
-
+import { AbstractControl } from '@angular/forms';
 @Component({
   selector: 'app-register',
   standalone: false,
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
+
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -76,5 +78,22 @@ export class RegisterComponent {
       // Form is invalid
       this.errorMessage = 'Please fill in all required fields correctly.';
     }
+  }
+  get confirmPassword(): AbstractControl | null {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+  
+  get password() {
+    return this.registerForm.get('password');
+  }
+  get name() {
+    return this.registerForm.get('name');
+  }
+  get phone() {
+    return this.registerForm.get('phone');
   }
 }

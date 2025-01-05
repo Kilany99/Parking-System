@@ -4,17 +4,18 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-// ... other shared imports
-
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { LabelModule } from '@progress/kendo-angular-label';
+import { NavigationComponent } from './navigation/navigation.component';
 @NgModule({
-  declarations: [
-    // Shared components, directives, and pipes
-  ],
-  imports: [CommonModule],
+  declarations: [],
+  imports: [CommonModule,NavigationComponent],
   exports: [
     CommonModule,
     ReactiveFormsModule,
     InputsModule,
+    ButtonsModule,
+    LabelModule,
     DropDownsModule,
   ],
 })

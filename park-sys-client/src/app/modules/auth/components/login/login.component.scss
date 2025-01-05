@@ -1,0 +1,105 @@
+/* Import Kendo UI Theme */
+@import '@progress/kendo-theme-default/dist/all.scss';
+/* Customize Kendo Theme Variables (Optional) */
+/* You can override Kendo theme variables before importing */
+$kendo-theme-primary: #3a7bd5; /* Customize the primary color */
+$kendo-theme-border-radius: 8px;
+$kendo-theme-text : #2d3436;
+$kendo-theme-error: #e74c3c;
+/* Re-import after variable overrides */
+@import '@progress/kendo-theme-default/dist/all.scss';
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e2e2e2 0%, #c9d6ff 100%);
+
+  .login-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: $kendo-theme-border-radius;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    animation: k-animation-expand 0.3s ease-out;
+
+    h2 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: $kendo-theme-text;
+    }
+
+    .k-form {
+      .k-form-field {
+        margin-bottom: 1.5rem;
+
+        /* Adjust label styles */
+        .k-label {
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          color: $kendo-theme-text;
+        }
+
+        /* Adjust input styles */
+        .k-input {
+          width: 100%;
+        }
+
+        .k-textbox, .k-input {
+          border-radius: $kendo-theme-border-radius;
+
+          &:focus {
+            border-color: $kendo-theme-primary;
+            box-shadow: 0 0 0 3px rgba($kendo-theme-primary, 0.2);
+          }
+        }
+
+        /* Validation error message */
+        .k-form-error {
+          color: $kendo-theme-error;
+          font-size: 0.875rem;
+          margin-top: 0.25rem;
+        }
+      }
+
+      .login-button {
+        width: 100%;
+        margin-top: 1rem;
+
+        /* Button styles */
+        @include kendo-button-variant(
+          $fill: solid,
+          $theme-color: primary,
+          $border-radius: $kendo-theme-border-radius
+        );
+
+        &:hover {
+          background-color: tint($kendo-theme-primary, 10%);
+        }
+      }
+
+      .k-link {
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+        color: $kendo-theme-primary;
+        font-size: 0.9rem;
+
+        &:hover {
+          color: darken($kendo-theme-primary, 10%);
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 1.5rem;
+  }
+}

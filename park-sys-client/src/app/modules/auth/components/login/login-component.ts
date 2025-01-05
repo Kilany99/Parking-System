@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  
+
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -40,5 +43,17 @@ export class LoginComponent {
         }
       );
     }
+    else {
+      // Form is invalid
+      this.errorMessage = 'Please fill in all required fields correctly.';
+    }
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+  
+  get password() {
+    return this.loginForm.get('password');
   }
 }

@@ -1,0 +1,78 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #2d3436;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.k-form {
+    width: 100%;
+    
+    kendo-formfield {
+        margin-bottom: 1.5rem;
+        width: 100%;
+
+        kendo-label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        kendo-textbox-container {
+            width: 100%;
+            
+            input {
+                width: 100%;
+                padding: 0.5rem;
+            }
+        }
+
+        kendo-formerror {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    }
+
+    .error {
+        background-color: #fee2e2;
+        border: 1px solid #ef4444;
+        color: #dc2626;
+        padding: 0.75rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+    }
+
+    button {
+        width: 100%;
+        margin: 1.5rem 0;
+        padding: 0.75rem;
+        
+        &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    }
+}
+
+p {
+    text-align: center;
+    margin-top: 1rem;
+    
+    a {
+        color: #0ea5e9;
+        text-decoration: none;
+        font-weight: 500;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

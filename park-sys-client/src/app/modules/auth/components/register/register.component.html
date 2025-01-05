@@ -1,50 +1,83 @@
 <h2>Register</h2>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Name:</label>
-    <input formControlName="name" id="name" type="text" />
-    <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-      Name is required and must be at least 2 characters
-    </div>
-  </div>
 
-  <div>
-    <label for="email">Email:</label>
-    <input formControlName="email" id="email" type="email" />
-    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-      Please enter a valid email
-    </div>
-  </div>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="k-form">
+  <!-- Name Field -->
+  <kendo-formfield>
+    <kendo-label [for]="'name'">Name:</kendo-label>
+    <kendo-textbox-container>
+      <input kendoTextBox formControlName="name" id="name" />
+    </kendo-textbox-container>
+    <kendo-formerror *ngIf="name?.invalid && name?.touched">
+      Name is required and must be at least 2 characters.
+    </kendo-formerror>
+  </kendo-formfield>
 
-  <div>
-    <label for="phone">Phone:</label>
-    <input formControlName="phone" id="phone" type="text" />
-    <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
-      Please enter a valid phone number
-    </div>
-  </div>
+  <!-- Email Field -->
+  <kendo-formfield>
+    <kendo-label [for]="'email'">Email:</kendo-label>
+    <kendo-textbox-container>
+      <input kendoTextBox formControlName="email" id="email" type="email" />
+    </kendo-textbox-container>
+    <kendo-formerror *ngIf="email?.invalid && email?.touched">
+      Please enter a valid email.
+    </kendo-formerror>
+  </kendo-formfield>
 
-  <div>
-    <label for="password">Password:</label>
-    <input formControlName="password" id="password" type="password" />
-    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-      Password is required and must be at least 6 characters
-    </div>
-  </div>
+  <!-- Phone Field -->
+  <kendo-formfield>
+    <kendo-label [for]="'phone'">Phone:</kendo-label>
+    <kendo-textbox-container>
+      <input kendoTextBox formControlName="phone" id="phone" type="tel" />
+    </kendo-textbox-container>
+    <kendo-formerror *ngIf="phone?.invalid && phone?.touched">
+      Phone number is required.
+    </kendo-formerror>
+  </kendo-formfield>
 
-  <div>
-    <label for="confirmPassword">Confirm Password:</label>
-    <input formControlName="confirmPassword" id="confirmPassword" type="password" />
-    <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
-      Passwords must match
-    </div>
-  </div>
+  <!-- Password Field -->
+  <kendo-formfield>
+    <kendo-label [for]="'password'">Password:</kendo-label>
+    <kendo-textbox-container>
+      <input kendoTextBox formControlName="password" id="password" type="password" />
+    </kendo-textbox-container>
+    <kendo-formerror *ngIf="password?.invalid && password?.touched">
+      Password is required and must be at least 6 characters.
+    </kendo-formerror>
+  </kendo-formfield>
 
+  <!-- Confirm Password Field -->
+  <kendo-formfield>
+    <kendo-label [for]="'confirmPassword'">Confirm Password:</kendo-label>
+    <kendo-textbox-container>
+      <input
+        kendoTextBox
+        formControlName="confirmPassword"
+        id="confirmPassword"
+        type="password"
+      />
+    </kendo-textbox-container>
+    <kendo-formerror *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+      Passwords must match.
+    </kendo-formerror>
+  </kendo-formfield>
+
+  <!-- Error Message -->
   <div *ngIf="errorMessage" class="error">
     {{ errorMessage }}
   </div>
 
-  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  <!-- Submit Button -->
+  <button
+    kendoButton
+    type="submit"
+    [disabled]="registerForm.invalid"
+    themeColor="primary"
+  >
+    Register
+  </button>
 </form>
 
-<p>Already have an account? <a routerLink="/login">Login here</a></p>
+<p>
+  Already have an account?
+  <a routerLink="/login">Login here</a>
+</p>

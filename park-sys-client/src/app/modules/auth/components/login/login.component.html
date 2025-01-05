@@ -1,18 +1,54 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>Email:</label>
-      <input formControlName="email" type="email" />
-      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        Please enter a valid email
+<div class="login-container">
+  <div class="login-card">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="k-form">
+      <!-- Email Field -->
+      <div class="k-form-field">
+        <label for="email" class="k-label">Email</label>
+        <input
+          kendoTextBox
+          formControlName="email"
+          id="email"
+          type="email"
+          class="k-input"
+        />
+        <span
+          class="k-form-error"
+          *ngIf="email?.invalid && email?.touched"
+        >
+          Please enter a valid email.
+        </span>
       </div>
-    </div>
-    <div>
-      <label>Password:</label>
-      <input formControlName="password" type="password" />
-      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-        Password is required
+
+      <!-- Password Field -->
+      <div class="k-form-field">
+        <label for="password" class="k-label">Password</label>
+        <input
+          kendoTextBox
+          formControlName="password"
+          id="password"
+          type="password"
+          class="k-input"
+        />
+        <span
+          class="k-form-error"
+          *ngIf="password?.invalid && password?.touched"
+        >
+          Password is required.
+        </span>
       </div>
-    </div>
-    <div *ngIf="errorMessage">{{ errorMessage }}</div>
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="loginForm.invalid"
+      >
+        Login
+      </button>
+
+      <!-- Additional Links -->
+      <a routerLink="/register" class="k-link">Don't have an account? Register</a>
+    </form>
+  </div>
+</div>

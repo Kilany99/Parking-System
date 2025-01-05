@@ -1,1 +1,9 @@
-<p>dashboard works!</p>
+
+
+<div class="dashboard">
+    <h1>Welcome, {{ user?.name }}</h1>
+  
+    <button kendoButton (click)="logout()" themeColor="primary">
+      Logout
+    </button>
+  </div>
