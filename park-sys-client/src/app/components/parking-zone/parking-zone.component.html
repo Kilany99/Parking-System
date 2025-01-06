@@ -1,0 +1,39 @@
+<kendo-grid [data]="parkingZones" [height]="400">
+    <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-column field="totalFloors" title="Total Floors"></kendo-grid-column>
+    <kendo-grid-column field="spotsPerFloor" title="Spots per Floor"></kendo-grid-column>
+    <kendo-grid-column field="hourlyRate" title="Hourly Rate"></kendo-grid-column>
+    <kendo-grid-column field="isFull" title="Is Full">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{ dataItem.isFull ? 'Yes' : 'No' }}</span>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+
+<kendo-grid [data]="parkingZones" [height]="400">
+<div *ngIf="selectedZoneId" class="zone-details">
+    <h3>Zone Status</h3>
+    <div *ngIf="zoneStatus" class="status-info">
+        <p>Total Spots: {{ zoneStatus.totalSpots }}</p>
+        <p>Occupied Spots: {{ zoneStatus.totalSpots-zoneStatus.availableSpots }}</p>
+        <p>Available Spots: {{ zoneStatus.availableSpots }}</p>
+    </div>
+
+    <h3>Available Parking Spots</h3>
+    <div class="spots-grid">
+        <kendo-grid [data]="availableSpots" [height]="300">
+            <kendo-grid-column field="spotNumber" title="Spot Number"></kendo-grid-column>
+            <kendo-grid-column field="floor" title="Floor"></kendo-grid-column>
+            <kendo-grid-column field="isOccupied" title="Status">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.isOccupied ? 'Occupied' : 'Available' }}
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>
+
+<button kendoButton (click)="selectZone(parkingZone.id)" *ngFor="let parkingZone of parkingZones">
+    Select {{ parkingZone.name }}
+</button>
+</kendo-grid>

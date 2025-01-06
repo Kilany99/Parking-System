@@ -1,0 +1,73 @@
+:host {
+    display: block;
+    padding: 20px;
+}
+
+// Add Car button styling
+button[kendoButton] {
+    margin-bottom: 20px;
+    
+    &[primary] {
+        font-weight: 500;
+    }
+}
+
+// Grid styling
+kendo-grid {
+    .k-grid-header {
+        background-color: #f6f6f6;
+    }
+    
+    .k-grid-content {
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    }
+    
+    kendo-grid-command-column {
+        button {
+            margin-right: 8px;
+            
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+// Dialog styling
+kendo-dialog {
+    .k-dialog-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+    
+    .form-field {
+        margin-bottom: 16px;
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+        }
+    }
+    
+    kendo-dialog-actions {
+        padding-top: 16px;
+        border-top: 1px solid #e6e6e6;
+        
+        button {
+            margin-left: 8px;
+            
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}

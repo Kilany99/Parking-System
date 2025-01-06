@@ -71,15 +71,20 @@ $kendo-theme-error: #e74c3c;
         margin-top: 1rem;
 
         /* Button styles */
-        @include kendo-button-variant(
-          $fill: solid,
-          $theme-color: primary,
-          $border-radius: $kendo-theme-border-radius
-        );
+        .login-button {
+          background-color: $kendo-theme-primary;
+          border-radius: $kendo-theme-border-radius;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          border: none;
+          cursor: pointer;
 
-        &:hover {
-          background-color: tint($kendo-theme-primary, 10%);
+          &:hover {
+            background-color: tint($kendo-theme-primary, 10%);
+          }
         }
+
+       
       }
 
       .k-link {

@@ -3,7 +3,7 @@ import { PaymentStatus } from '../enums/payment-status.enum';
 export interface ProcessPaymentDto {
     reservationId: number;
     amount: number;
-    method: PaymentMethod;
+    method: number;
 }
 
 export interface PaymentDto {

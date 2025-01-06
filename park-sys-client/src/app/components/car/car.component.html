@@ -1,0 +1,42 @@
+<button kendoButton (click)="addCar()" [primary]="true">Add Car</button>
+
+<kendo-grid [data]="cars" [height]="400">
+  <kendo-grid-column field="plateNumber" title="Plate Number" [style.width.px]="columnWidth"></kendo-grid-column>
+  <kendo-grid-column field="model" title="Model" [style.width.px]="columnWidth"></kendo-grid-column>
+  <kendo-grid-column field="color" title="Color" [style.width.px]="columnWidth"></kendo-grid-column>
+  <kendo-grid-command-column title="Actions" [style.width.px]="columnWidth">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button kendoButton (click)="editCar(dataItem)">Edit</button>
+      <button kendoButton (click)="deleteCar(dataItem)">Delete</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
+
+<kendo-dialog *ngIf="isDialogOpen" (close)="cancel()">
+  <ng-template kendoDialogTitle>
+    {{ isNew ? 'Add Car' : 'Edit Car' }}
+  </ng-template>
+
+  <div class="form-field">
+    <label for="plateNumber">Plate Number:</label>
+    <input
+      kendoTextBox
+      [(ngModel)]="selectedCar.plateNumber"
+      id="plateNumber"
+      required
+    />
+  </div>
+  <div class="form-field">
+    <label for="model">Model:</label>
+    <input kendoTextBox [(ngModel)]="selectedCar.model" id="model" required />
+  </div>
+  <div class="form-field">
+    <label for="color">Color:</label>
+    <input kendoTextBox [(ngModel)]="selectedCar.color" id="color" />
+  </div>
+
+  <kendo-dialog-actions>
+    <button kendoButton (click)="cancel()">Cancel</button>
+    <button kendoButton (click)="saveCar()" [primary]="true">Save</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

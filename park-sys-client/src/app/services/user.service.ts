@@ -9,7 +9,7 @@ import { UpdateUserDto, UserDto } from '../models/DTOs/user.dto';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = `${Environment.apiUrl}/user`; // Adjust based on your API endpoint
+  private apiUrl = `${Environment.apiUrl}/user`; 
 
   constructor(private http: HttpClient) {}
 

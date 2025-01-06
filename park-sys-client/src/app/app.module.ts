@@ -12,7 +12,8 @@ import { AuthInterceptorService } from './interceptors/auth-interceptor.service'
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './modules/auth/components/login/login-component';
 import { NavigationComponent } from './modules/shared/navigation/navigation.component';
-import { RegisterComponent } from './modules/auth/components/register/register.component';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import {DialogsModule} from '@progress/kendo-angular-dialog';
 @NgModule({
   declarations: [],
   imports: [
@@ -21,6 +22,8 @@ import { RegisterComponent } from './modules/auth/components/register/register.c
     NavigationComponent,
     BrowserAnimationsModule,
     HttpClientModule,
+    ButtonsModule,
+    DialogsModule,
     GridModule,
     InputsModule,
     DropDownsModule,

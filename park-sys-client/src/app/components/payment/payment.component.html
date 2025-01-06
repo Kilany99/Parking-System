@@ -1,0 +1,48 @@
+<div class="payment-container">
+    <kendo-card>
+        <kendo-card-header>
+            <h2>Payment Details</h2>
+        </kendo-card-header>
+        <kendo-card-body>
+            <form (ngSubmit)="processPayment(paymentData)" #paymentForm="ngForm">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" [(ngModel)]="paymentData.amount" name="amount" required min="0.01" #amount="ngModel" />
+                    <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="error-message">
+                        <div *ngIf="amount.errors?.['required']">Amount is required.</div>
+                        <div *ngIf="amount.errors?.['min']">Amount must be greater than 0.</div>
+                    </div>
+                  
+                    <label for="reservationId">Reservation Id</label>
+                    <input type="number" [(ngModel)]="paymentData.reservationId" name="reservationId" required />
+                    
+                </div>
+                <div class="form-group">
+                    <label for="method">Payment Method</label>
+                    <select id="method" [(ngModel)]="paymentData.method" type = "number" name="method" required>
+                        <option *ngFor="let method of paymentMethods" [value]="paymentData.method">{{ method }}</option>
+                    </select>
+                </div>
+               
+                <button kendoButton type="submit" [disabled]="loading || paymentForm.invalid!">Process Payment</button>
+            </form>
+            <div *ngIf="error" class="error-message">{{ error }}</div>
+        </kendo-card-body>
+    </kendo-card>
+
+    <kendo-card>
+        <kendo-card-header>
+            <h2>My Payments</h2>
+        </kendo-card-header>
+        <kendo-card-body>
+            <button kendoButton (click)="loadMyPayments()" [disabled]="loading">Load My Payments</button>
+            <ul>
+                <li *ngFor="let payment of payments">
+                    <label>Amount:</label> - <label>Method:</label>
+                    <br>
+                    {{ payment.amount }} - {{ payment.method }}
+                </li>
+            </ul>
+        </kendo-card-body>
+    </kendo-card>
+</div>
