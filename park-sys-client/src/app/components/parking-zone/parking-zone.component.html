@@ -1,39 +1,61 @@
+
+<h3>Available Parking Zones</h3>
+
 <kendo-grid [data]="parkingZones" [height]="400">
     <kendo-grid-column field="name" title="Name"></kendo-grid-column>
     <kendo-grid-column field="totalFloors" title="Total Floors"></kendo-grid-column>
     <kendo-grid-column field="spotsPerFloor" title="Spots per Floor"></kendo-grid-column>
     <kendo-grid-column field="hourlyRate" title="Hourly Rate"></kendo-grid-column>
     <kendo-grid-column field="isFull" title="Is Full">
-      <ng-template kendoGridCellTemplate let-dataItem>
-        <span>{{ dataItem.isFull ? 'Yes' : 'No' }}</span>
-      </ng-template>
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{ dataItem.isFull ? 'Yes' : 'No' }}</span>
+        </ng-template>
     </kendo-grid-column>
-  </kendo-grid>
+</kendo-grid>
 
-<kendo-grid [data]="parkingZones" [height]="400">
 <div *ngIf="selectedZoneId" class="zone-details">
     <h3>Zone Status</h3>
     <div *ngIf="zoneStatus" class="status-info">
         <p>Total Spots: {{ zoneStatus.totalSpots }}</p>
-        <p>Occupied Spots: {{ zoneStatus.totalSpots-zoneStatus.availableSpots }}</p>
+        <p>Occupied Spots: {{ zoneStatus.totalSpots - zoneStatus.availableSpots }}</p>
         <p>Available Spots: {{ zoneStatus.availableSpots }}</p>
     </div>
 
     <h3>Available Parking Spots</h3>
-    <div class="spots-grid">
-        <kendo-grid [data]="availableSpots" [height]="300">
+    <div class="spots-grid"></div>
+        <kendo-grid [data]="availableSpots" [height]="300"></kendo-grid>
             <kendo-grid-column field="spotNumber" title="Spot Number"></kendo-grid-column>
             <kendo-grid-column field="floor" title="Floor"></kendo-grid-column>
-            <kendo-grid-column field="isOccupied" title="Status">
+            <kendo-grid-column field="isOccupied" title="Status"></kendo-grid-column>
                 <ng-template kendoGridCellTemplate let-dataItem>
                     {{ dataItem.isOccupied ? 'Occupied' : 'Available' }}
                 </ng-template>
-            </kendo-grid-column>
-        </kendo-grid>
+           
     </div>
-</div>
 
 <button kendoButton (click)="selectZone(parkingZone.id)" *ngFor="let parkingZone of parkingZones">
     Select {{ parkingZone.name }}
 </button>
-</kendo-grid>
+
+<div class="create-zone-form">
+    <h3>Create New Parking Zone</h3>
+    <form (ngSubmit)="createZone(newZoneForm.value)" #newZoneForm="ngForm">
+        <div>
+            <label for="zoneName">Zone Name:</label>
+            <input type="text" id="zoneName" name="name" ngModel required>
+        </div>
+        <div>
+            <label for="totalFloors">Total Floors:</label>
+            <input type="number" id="totalFloors" name="totalFloors" ngModel required>
+        </div>
+        <div>
+            <label for="spotsPerFloor">Spots per Floor:</label>
+            <input type="number" id="spotsPerFloor" name="spotsPerFloor" ngModel required>
+        </div>
+        <div>
+            <label for="hourlyRate">Hourly Rate:</label>
+            <input type="number" id="hourlyRate" name="hourlyRate" ngModel required>
+        </div>
+        <button type="submit" kendoButton>Create Zone</button>
+    </form>
+</div>

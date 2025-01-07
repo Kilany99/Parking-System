@@ -1,7 +1,13 @@
 <nav>
-    <ul>
-      <li *ngIf="isLoggedIn"><a routerLink="/dashboard">Dashboard</a></li>
-      
-      <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
-    </ul>
-  </nav>
+  <ul>
+    <li *ngIf="isLoggedIn"><a (click)="dashboard()">Dashboard</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="cars()">Cars</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="parkingZones()">Parking Zones</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="payments()">Payments</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="reservations()">Reservations</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="users()">Users</a></li>
+    <li *ngIf="!isLoggedIn"><a (click)="login()">Login</a></li>
+    <li *ngIf="!isLoggedIn"><a (click)="register()">Register</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
+  </ul>
+</nav>

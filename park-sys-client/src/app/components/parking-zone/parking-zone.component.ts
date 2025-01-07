@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ParkingZoneService } from '../../services/parking-zone.service';
 import { ParkingSpotDto, ParkingZoneDto, ParkingZoneStatusDto } from '../../models/DTOs/parking-zone.dto';
-// Removed unused import
 import { SharedModule } from '../../modules/shared/shared.module';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
