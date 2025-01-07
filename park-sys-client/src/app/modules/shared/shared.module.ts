@@ -13,21 +13,35 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { FormsModule } from '@angular/forms';
 import { LoaderModule } from '@progress/kendo-angular-indicators';
 import { CardModule } from '@progress/kendo-angular-layout';
+import { AppModule } from '../../app.module';
+import { CarComponent } from '../../components/car/car.component';
 @NgModule({
   declarations: [],
-  imports: [CommonModule,NavigationComponent,CardModule,ButtonsModule],
-  exports: [
-    FormsModule,
-    LoaderModule,
-    CommonModule,
+  imports: [
+    CommonModule,  // For common Angular directives
+    ReactiveFormsModule, 
     GridModule,
     DialogsModule,
     DateInputsModule,
-    ReactiveFormsModule,
     InputsModule,
     ButtonsModule,
     LabelModule,
     DropDownsModule,
+    LoaderModule,
+    CardModule,],
+  exports: [
+    CommonModule,
+    FormsModule,  // Export FormsModule if needed by other modules
+    ReactiveFormsModule,
+    InputsModule,
+    ButtonsModule,
+    GridModule,
+    LabelModule,
+    DropDownsModule,
+    DialogsModule,
+    DateInputsModule,
+    LoaderModule,
+    CardModule,
   ],
 })
 export class SharedModule {}

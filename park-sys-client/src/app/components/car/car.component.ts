@@ -1,14 +1,18 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../../services/car.service';
 import { CarDto } from '../../models/DTOs/car.dto';
 import { SharedModule } from '../../modules/shared/shared.module';
 import { AppModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { provideAnimations } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-car',
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss'],
-  imports: [SharedModule,FormsModule]
+  providers: [provideAnimations()],
+  imports: [SharedModule,FormsModule,CommonModule],
 })
 export class CarComponent implements OnInit {
   cars: CarDto[] = [];
@@ -38,11 +42,33 @@ export class CarComponent implements OnInit {
   }
 
   addCar(): void {
-    this.selectedCar ={ id: 0, plateNumber: '', model: '', color: '' }; ;
+    this.selectedCar = { id: 0, plateNumber: '', model: '', color: '' };
     this.isNew = true;
     this.isDialogOpen = true;
   }
-
+  submitCar(): void {
+    if (this.isNew) {
+      this.carService.createCar(this.selectedCar).subscribe(
+        (newCar) => {
+          this.cars.push(newCar);
+          this.isDialogOpen = false;
+        },
+        (error) => {
+          console.error('Error adding car:', error);
+        }
+      );
+    } else {
+      this.carService.updateCar(this.selectedCar.id, this.selectedCar).subscribe(
+        () => {
+          this.loadCars();
+          this.isDialogOpen = false;
+        },
+        (error) => {
+          console.error('Error updating car:', error);
+        }
+      );
+    }
+  }
   editCar(car: CarDto): void {
     this.selectedCar = { ...car };
     this.isNew = false;

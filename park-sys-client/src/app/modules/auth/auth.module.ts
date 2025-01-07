@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [LoginComponent,RegisterComponent],

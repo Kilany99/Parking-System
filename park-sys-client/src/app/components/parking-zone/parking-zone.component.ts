@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ParkingZoneService } from '../../services/parking-zone.service';
 import { ParkingSpotDto, ParkingZoneDto, ParkingZoneStatusDto } from '../../models/DTOs/parking-zone.dto';
-import { share } from 'rxjs';
+// Removed unused import
 import { SharedModule } from '../../modules/shared/shared.module';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-parking-zone',
@@ -16,21 +18,23 @@ export class ParkingZoneComponent implements OnInit {
   zoneStatus: ParkingZoneStatusDto | null = null;
   availableSpots: ParkingSpotDto[] = [];
   
-  constructor(private parkingZoneService: ParkingZoneService) {}
+  constructor(private parkingZoneService: ParkingZoneService,@Inject(PLATFORM_ID) private platformId: any) {}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
     this.loadParkingZones();
+    }
   }
 
   loadParkingZones(): void {
-    this.parkingZoneService.getParkingZones().subscribe(
-      (data) => {
+    this.parkingZoneService.getParkingZones().subscribe({
+      next: (data) => {
         this.parkingZones = data;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching parking zones:', error);
       }
-    );
+    });
   }
 
 
@@ -41,35 +45,35 @@ selectZone(id: number): void {
 }
 
 loadZoneStatus(id: number): void {
-  this.parkingZoneService.getZoneStatus(id).subscribe(
-    (status) => {
+  this.parkingZoneService.getZoneStatus(id).subscribe({
+    next: (status) => {
       this.zoneStatus = status;
     },
-    (error) => {
+    error: (error) => {
       console.error('Error fetching zone status:', error);
     }
-  );
+  });
 }
 
 loadAvailableSpots(id: number): void {
-  this.parkingZoneService.getAvailableSpots(id).subscribe(
-    (spots) => {
+  this.parkingZoneService.getAvailableSpots(id).subscribe({
+    next: (spots) => {
       this.availableSpots = spots;
     },
-    (error) => {
+    error: (error) => {
       console.error('Error fetching available spots:', error);
     }
-  );
+  });
 }
 
 createZone(zoneData: any): void {
-  this.parkingZoneService.createParkingZone(zoneData).subscribe(
-    (newZone) => {
+  this.parkingZoneService.createParkingZone(zoneData).subscribe({
+    next: (newZone) => {
       this.parkingZones.push(newZone);
     },
-    (error) => {
+    error: (error) => {
       console.error('Error creating parking zone:', error);
     }
-  );
+  });
 }
 }

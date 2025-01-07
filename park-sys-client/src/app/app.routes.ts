@@ -16,7 +16,7 @@ export const routes: Routes = [
           import('./modules/auth/auth.module').then((m) => m.AuthModule),
       },
       { path: 'cars', component: CarComponent, canActivate: [AuthGuard] },
-      { path: 'parking-zones', component: ParkingZoneComponent },
+      { path: 'parking-zones', component: ParkingZoneComponent, canActivate: [AuthGuard] },
       { path: 'payments', component: PaymentComponent, canActivate: [AuthGuard] },
       { path: 'reservations', component: ReservationComponent, canActivate: [AuthGuard] },
       { path: 'users', component: UserComponent, canActivate: [AuthGuard] }, // For admin users

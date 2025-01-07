@@ -14,13 +14,14 @@ import { LoginComponent } from './modules/auth/components/login/login-component'
 import { NavigationComponent } from './modules/shared/navigation/navigation.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import {DialogsModule} from '@progress/kendo-angular-dialog';
+import { RegisterComponent } from './modules/auth/components/register/register.component';
+import { CarComponent } from './components/car/car.component';
+
 @NgModule({
   declarations: [],
   imports: [
-    AppComponent,
     BrowserModule,
     NavigationComponent,
-    BrowserAnimationsModule,
     HttpClientModule,
     ButtonsModule,
     DialogsModule,
@@ -28,7 +29,9 @@ import {DialogsModule} from '@progress/kendo-angular-dialog';
     InputsModule,
     DropDownsModule,
     DateInputsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CarComponent,
+
   ],
  
   providers: [
