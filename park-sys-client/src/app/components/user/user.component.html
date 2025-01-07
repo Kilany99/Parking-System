@@ -1,1 +1,82 @@
-<p>user works!</p>
+<div class="user-management">
+    <button kendoButton (click)="addUser()" [primary]="true">Add User</button>
+  
+    <kendo-grid
+      [data]="gridData"
+      [pageSize]="pageSize"
+      [skip]="skip"
+      [pageable]="true"
+      [sortable]="true"
+      (pageChange)="pageChange($event)"
+    >
+      <kendo-grid-column field="id" title="ID" [width]="50"></kendo-grid-column>
+      <kendo-grid-column field="name" title="Name" [width]="150"></kendo-grid-column>
+      <kendo-grid-column field="email" title="Email" [width]="200"></kendo-grid-column>
+      <kendo-grid-column field="phone" title="Phone" [width]="150"></kendo-grid-column>
+      <kendo-grid-column field="role" title="Role" [width]="100"></kendo-grid-column>
+      <kendo-grid-command-column title="Actions" [width]="200">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <button kendoButton (click)="editUser(dataItem)">Edit</button>
+          <button kendoButton (click)="deleteUser(dataItem)">Delete</button>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+  
+    <!-- User Dialog -->
+    <kendo-dialog *ngIf="isDialogOpen" (close)="closeDialog()">
+      <ng-template kendoDialogTitle>
+        {{ isNew ? 'Add User' : 'Edit User' }}
+      </ng-template>
+  
+      <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input kendoTextBox formControlName="name" id="name" />
+          <kendo-formerror *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+            >Name is required.</kendo-formerror
+          >
+        </div>
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input kendoTextBox formControlName="email" id="email" type="email" />
+          <kendo-formerror *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+            >Valid email is required.</kendo-formerror
+          >
+        </div>
+        <div class="form-field">
+          <label for="phone">Phone</label>
+          <input kendoTextBox formControlName="phone" id="phone" />
+          <kendo-formerror *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched"
+            >Phone is required.</kendo-formerror
+          >
+        </div>
+        <div class="form-field">
+          <label for="role">Role</label>
+          <kendo-dropdownlist
+            [data]="['User', 'Admin']"
+            formControlName="role"
+            id="role"
+          ></kendo-dropdownlist>
+          <kendo-formerror *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched"
+            >Role is required.</kendo-formerror
+          >
+        </div>
+        <!-- Password field for creating new users -->
+        <div class="form-field" *ngIf="isNew">
+          <label for="password">Password</label>
+          <input kendoTextBox formControlName="password" id="password" type="password" />
+          <kendo-formerror
+            *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+            >Password is required.</kendo-formerror
+          >
+        </div>
+      </form>
+  
+      <kendo-dialog-actions>
+        <button kendoButton (click)="closeDialog()">Cancel</button>
+        <button kendoButton (click)="saveUser()" [disabled]="userForm.invalid" [primary]="true">
+          Save
+        </button>
+      </kendo-dialog-actions>
+    </kendo-dialog>
+  </div>

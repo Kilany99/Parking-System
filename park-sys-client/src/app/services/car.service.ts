@@ -50,7 +50,6 @@ export class CarService {
   }
 
   private handleError(error: any) {
-    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
     console.error('An error occurred:', error);
     return throwError(() => error);
   }

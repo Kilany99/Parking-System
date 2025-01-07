@@ -18,7 +18,7 @@ export class PaymentService {
   // Process a payment
   processPayment(dto: ProcessPaymentDto): Observable<PaymentDto> {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
-    return this.http.post<PaymentDto>(this.apiUrl, dto).pipe(
+    return this.http.post<PaymentDto>(this.apiUrl, dto,{headers}).pipe(
       catchError(this.handleError)
     );
   }
@@ -26,7 +26,7 @@ export class PaymentService {
   // Get payment details by ID
   getPaymentDetails(id: number): Observable<PaymentDto> {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
-    return this.http.get<PaymentDto>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<PaymentDto>(`${this.apiUrl}/${id}`,{headers}).pipe(
       catchError(this.handleError)
     );
   }

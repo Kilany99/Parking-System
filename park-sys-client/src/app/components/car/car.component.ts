@@ -7,12 +7,28 @@ import { AppModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { GridModule } from '@progress/kendo-angular-grid';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 @Component({
   selector: 'app-car',
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss'],
   providers: [provideAnimations()],
-  imports: [SharedModule,FormsModule,CommonModule],
+  imports: [
+     CommonModule,
+        FormsModule,
+        GridModule, // Import GridModule here
+        InputsModule,
+        DialogsModule,
+        ButtonsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DropDownListModule,
+  ],
 })
 export class CarComponent implements OnInit {
   cars: CarDto[] = [];

@@ -129,4 +129,8 @@ private isTokenExpired(token: string): boolean {
     }
     return true;
   }
+  public getUserRole(): string {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken ? decodedToken.role : null;
+  }
 }
