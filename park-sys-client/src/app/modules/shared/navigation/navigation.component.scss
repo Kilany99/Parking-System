@@ -28,6 +28,10 @@ nav {
                 &:hover {
                     background-color: darken($primary, 10%);
                     transform:scale3d(1.5, 1.2, 1.4);
+                    transition: transform 0.3s ease-in-out;
+                    transform: translateY(-10px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    border-style: hidden;
                 }
             }
         }

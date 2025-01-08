@@ -1,1 +1,72 @@
-<p>reservation works!</p>
+<div class="reservation-container">
+    <!-- Reservation Grid -->
+    <h2>Your Reservations</h2>
+    <kendo-grid [data]="myReservations" 
+                [loading]="loading"
+                [sortable]="true"
+                [sort]="sort"
+                (sortChange)="sortChange($event)">
+        <kendo-grid-column field="id" title="Reservation ID" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="carId" title="Car ID" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="createdAt" title="Created At" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="status" title="Status" Width="100" [sortable]="true">
+            <ng-template kendoGridCellTemplate let-dataItem>
+            {{
+                dataItem.status === 0 ? 'Reserved' :
+                dataItem.status === 1 ? 'Active' :
+                dataItem.status === 2 ? 'Completed' :
+                dataItem.status === 3 ? 'Cancelled' : ''
+            }}
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="totalAmount" title="Total Amount $" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="entryTime" title="Entry Time" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="exitTime" title="Exit Time" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="qrCode" title="QR Code" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column title="Actions" Width="200">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <button kendoButton (click)="calculateReservationFee(dataItem.id)">
+                    Calculate Fee
+                </button>
+                <button kendoButton [primary]="true" (click)="cancelReservation(dataItem.id)">
+                    Cancel
+                </button>
+            </ng-template>
+        </kendo-grid-column>
+    </kendo-grid>
+</div>
+    <!-- New Reservation Form -->
+    <div class="new-reservation-form">
+        <h3>Create New Reservation</h3>
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+            <kendo-formfield>
+                <kendo-label [for]="carId" text="Car ID"></kendo-label>
+                <kendo-numerictextbox
+                    [id]="carId"
+                    formControlName="carId"
+                    [min]="1"
+                    [step]="1">
+                </kendo-numerictextbox>
+            </kendo-formfield>
+
+            <div class="form-buttons">
+                <button kendoButton [primary]="true" type="submit" [disabled]="!reservationForm.valid">
+                    Create Reservation
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Fee Display Dialog -->
+    <kendo-dialog *ngIf="showFeeDialog" (close)="closeFeeDialog()">
+        <kendo-dialog-titlebar>Reservation Fee</kendo-dialog-titlebar>
+        <div class="fee-content">
+            <p>The calculated fee is: ${{ calculatedFee }}</p>
+        </div>
+        <kendo-dialog-actions>
+            <button kendoButton (click)="closeFeeDialog()">Close</button>
+        </kendo-dialog-actions>
+    </kendo-dialog>
+
+    <!-- Loading Indicator -->
+    <kendo-loader *ngIf="loading" type="infinite-spinner"></kendo-loader>

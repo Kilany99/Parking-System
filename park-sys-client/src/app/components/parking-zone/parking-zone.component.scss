@@ -25,7 +25,7 @@ kendo-grid {
 }
 
 .zone-details {
-    background-color: #ffffff;
+    background-color: #f0f0f0;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -45,7 +45,7 @@ kendo-grid {
 
         p {
             padding: 10px;
-            background-color: #f8f9fa;
+            background-color: #f0f0f0;
             border-radius: 4px;
             text-align: center;
             margin: 0;
@@ -62,11 +62,12 @@ button {
     padding: 8px 16px;
     
     &.k-button {
-        background-color: #007bff;
+        background-color: #ff6358; 
         color: white;
         
         &:hover {
-            background-color: #0056b3;
+            background-color:daarken(#ff6358, 10%);
+
         }
     }
 }
@@ -81,7 +82,7 @@ button {
 
 
 .create-zone-form {
-    background-color: #ffffff;
+    background-color: #f0f0f0;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

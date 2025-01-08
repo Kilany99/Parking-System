@@ -16,9 +16,34 @@ export class ParkingZoneComponent implements OnInit {
   selectedZoneId: number | null = null;
   zoneStatus: ParkingZoneStatusDto | null = null;
   availableSpots: ParkingSpotDto[] = [];
-  
+  sort: any[] = [];
   constructor(private parkingZoneService: ParkingZoneService,@Inject(PLATFORM_ID) private platformId: any) {}
 
+  sortChange(sort: any): void {
+      this.sort = sort;
+      // Apply sorting to the local data
+      this.availableSpots = [...this.availableSpots].sort((a, b) => {
+        const dir = this.sort[0].dir === 'asc' ? 1 : -1;
+        const field = this.sort[0].field;
+        
+        if (a[field as keyof ParkingSpotDto] < b[field as keyof ParkingSpotDto]) return -1 * dir;
+        if (a[field as keyof ParkingSpotDto] > b[field as keyof ParkingSpotDto]) return 1 * dir;
+        return 0;
+      });
+    }
+
+    sortChange2(sort: any): void {
+      this.sort = sort;
+      // Apply sorting to the local data
+      this.parkingZones = [...this.parkingZones].sort((a, b) => {
+        const dir = this.sort[0].dir === 'asc' ? 1 : -1;
+        const field = this.sort[0].field;
+        
+        if (a[field as keyof ParkingZoneDto] < b[field as keyof ParkingZoneDto]) return -1 * dir;
+        if (a[field as keyof ParkingZoneDto] > b[field as keyof ParkingZoneDto]) return 1 * dir;
+        return 0;
+      });
+    }
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
     this.loadParkingZones();

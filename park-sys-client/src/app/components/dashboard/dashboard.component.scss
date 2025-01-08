@@ -1,0 +1,108 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+
+    .dashboard-header {
+        text-align: center;
+        background-color: #ff4085;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease-in-out;
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        &:hover {
+            background-color:darken($color: #ff4085, $amount: 20%);
+        }
+    }
+
+    .quick-actions {
+        .k-grid-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .k-grid-content {
+            background-color: white;
+        }
+
+        .k-icon {
+            font-size: 1.5em;
+        }
+    }
+
+    .statistics-container {
+        display: flex;
+        gap: 20px;
+
+        .stat-card {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+
+            &:hover {
+                transform: translateY(-5px);
+            }
+
+            h3 {
+                margin: 0;
+                font-size: 1.2em;
+                color: #007bff;
+            }
+
+            .stat-number {
+                font-size: 2em;
+                font-weight: bold;
+            }
+        }
+    }
+
+    kendo-chart {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .notification-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease-in-out;
+
+        .k-icon {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-time {
+            font-size: 0.8em;
+            color: gray;
+        }
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+}

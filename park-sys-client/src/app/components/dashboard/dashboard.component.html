@@ -1,9 +1,57 @@
-
-
-<div class="dashboard">
-    <h1>Welcome, {{ user?.name }}</h1>
-  
-    <button kendoButton (click)="logout()" themeColor="primary">
-      Logout
-    </button>
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <h1>Parking System Dashboard</h1>
   </div>
+
+  <!-- Quick Actions Grid -->
+  <kendo-grid [data]="quickActions" class="quick-actions">
+    <kendo-grid-column field="icon" title="" Width="50">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span class="k-icon" [class]="dataItem.icon"></span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="action" title="Quick Actions"></kendo-grid-column>
+  </kendo-grid>
+
+  <!-- Statistics Cards -->
+  <div class="statistics-container">
+    <kendo-card class="stat-card">
+      <kendo-card-header>
+        <h3>Available Spaces</h3>
+      </kendo-card-header>
+      <kendo-card-body>
+        <span class="stat-number">{{availableSpaces}}</span>
+      </kendo-card-body>
+    </kendo-card>
+
+    <kendo-card class="stat-card">
+      <kendo-card-header>
+        <h3>Today's Revenue</h3>
+      </kendo-card-header>
+      <kendo-card-body>
+        <span class="stat-number">{{todayRevenue | currency}}</span>
+      </kendo-card-body>
+    </kendo-card>
+  </div>
+
+  <!-- Recent Activity Chart -->
+  <kendo-chart>
+    <kendo-chart-title text="Parking Activity"></kendo-chart-title>
+    <kendo-chart-series>
+      <kendo-chart-series-item type="line" [data]="parkingActivity" field="value" categoryField="time">
+      </kendo-chart-series-item>
+    </kendo-chart-series>
+  </kendo-chart>
+
+  <!-- Notifications Panel -->
+  <kendo-listview [data]="notifications">
+    <ng-template kendoListViewTemplate let-notification>
+      <div class="notification-item">
+        <span class="k-icon" [class]="notification.icon"></span>
+        <span class="notification-text">{{notification.message}}</span>
+        <span class="notification-time">{{notification.time | date:'short'}}</span>
+      </div>
+    </ng-template>
+  </kendo-listview>
+</div>

@@ -3,7 +3,7 @@
     <div class="banner-content">
       <h1>Welcome to EasyPark</h1>
       <p>Your ultimate solution for hassle-free parking.</p>
-      <button kendoButton [routerLink]="'/Reservation'" themeColor="primary" size="large">
+      <button kendoButton (click)="redirect()" themeColor="primary" size="large">
         Reserve Now!
       </button>
     </div>

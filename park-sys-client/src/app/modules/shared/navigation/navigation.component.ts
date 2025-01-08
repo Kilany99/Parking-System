@@ -22,7 +22,7 @@ export class NavigationComponent implements OnInit {
     logout(): void {
       this.authService.logout();
       // Redirect the user to the login page or home page
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
     login(): void {
       this.router.navigate(['/auth/login']);

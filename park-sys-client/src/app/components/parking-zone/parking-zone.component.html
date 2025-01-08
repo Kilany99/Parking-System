@@ -1,12 +1,12 @@
 
 <h3>Available Parking Zones</h3>
 
-<kendo-grid [data]="parkingZones" [height]="400">
-    <kendo-grid-column field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-column field="totalFloors" title="Total Floors"></kendo-grid-column>
-    <kendo-grid-column field="spotsPerFloor" title="Spots per Floor"></kendo-grid-column>
-    <kendo-grid-column field="hourlyRate" title="Hourly Rate"></kendo-grid-column>
-    <kendo-grid-column field="isFull" title="Is Full">
+<kendo-grid [data]="parkingZones" [height]="400" [sortable]="true" [sort]="sort" (sortChange)="sortChange2($event)">
+    <kendo-grid-column field="name" title="Name" [sortable]="true"></kendo-grid-column>
+    <kendo-grid-column field="totalFloors" title="Total Floors" [sortable]="true"></kendo-grid-column>
+    <kendo-grid-column field="spotsPerFloor" title="Spots per Floor" [sortable]="true"></kendo-grid-column>
+    <kendo-grid-column field="hourlyRate" title="Hourly Rate" [sortable]="true"></kendo-grid-column>
+    <kendo-grid-column field="isFull" title="Is Full" [sortable]="true">
         <ng-template kendoGridCellTemplate let-dataItem>
             <span>{{ dataItem.isFull ? 'Yes' : 'No' }}</span>
         </ng-template>
@@ -22,17 +22,32 @@
     </div>
 
     <h3>Available Parking Spots</h3>
-    <div class="spots-grid"></div>
-        <kendo-grid [data]="availableSpots" [height]="300"></kendo-grid>
-            <kendo-grid-column field="spotNumber" title="Spot Number"></kendo-grid-column>
-            <kendo-grid-column field="floor" title="Floor"></kendo-grid-column>
-            <kendo-grid-column field="isOccupied" title="Status"></kendo-grid-column>
+    <div class="spots-grid">
+        <kendo-grid [data]="availableSpots" [height]="300" [sortable]="true"
+        [sort]="sort"
+        (sortChange)="sortChange($event)">
+            <kendo-grid-column field="spotNumber" title="Spot Number" [sortable]="true"></kendo-grid-column>
+            <kendo-grid-column field="floor" title="Floor" [sortable]="true"></kendo-grid-column>
+                <kendo-grid-column field="status" title="Status" [sortable]="true">
                 <ng-template kendoGridCellTemplate let-dataItem>
-                    {{ dataItem.isOccupied ? 'Occupied' : 'Available' }}
+                    {{ dataItem.status === 0 ? 'Available' : 
+                       dataItem.status === 1 ? 'Occupied' : 
+                       dataItem.status === 2 ? 'Maintenance' : 
+                       dataItem.status === 3 ? 'Out of Service' : 'Unknown' }}
                 </ng-template>
-           
+                </kendo-grid-column>
+                <kendo-grid-column field="type" title="Type" [sortable]="true">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.type === 0 ? 'Regular' : 
+                       dataItem.type === 1 ? 'Handicapped' : 
+                       dataItem.type === 2 ? 'VIP':
+                       dataItem.type === 2 ? 'Electric' : 'Unknown' }}
+                </ng-template>
+                </kendo-grid-column>
+        </kendo-grid>
     </div>
-
+</div>
+<h3>Select Parking Zone Name to Show Spots Status</h3>
 <button kendoButton (click)="selectZone(parkingZone.id)" *ngFor="let parkingZone of parkingZones">
     Select {{ parkingZone.name }}
 </button>
