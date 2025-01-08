@@ -25,10 +25,10 @@ export class NavigationComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     login(): void {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
     register(): void {
-      this.router.navigate(['/register']);
+      this.router.navigate(['/auth/register']);
     }
     cars(): void { 
       this.router.navigate(['/cars']);
@@ -47,6 +47,9 @@ export class NavigationComponent implements OnInit {
     }
     dashboard(): void {
       this.router.navigate(['/dashboard']);
+    }
+    home(): void {
+      this.router.navigate(['/']);
     }
   
 } 

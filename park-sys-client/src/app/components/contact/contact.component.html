@@ -1,0 +1,71 @@
+<div class="contact-container k-d-flex k-flex-col">
+    <div class="k-card k-mb-4">
+        <div class="k-card-header">
+            <h2 class="k-card-title">Contact Us</h2>
+        </div>
+        <div class="k-card-body">
+            <form class="k-form k-form-horizontal">
+                <kendo-formfield>
+                    <kendo-label [for]="name" text="Name"></kendo-label>
+                    <kendo-textbox
+                        #name
+                        placeholder="Enter your name"
+                        [fillMode]="'solid'"
+                    ></kendo-textbox>
+                </kendo-formfield>
+
+                <kendo-formfield>
+                    <kendo-label [for]="email" text="Email"></kendo-label>
+                    <kendo-textbox
+                        #email
+                        Type="email"
+                        placeholder="Enter your email"
+                        [fillMode]="'solid'"
+                    ></kendo-textbox>
+                </kendo-formfield>
+
+                <kendo-formfield>
+                    <kendo-label [for]="subject" text="Subject"></kendo-label>
+                    <kendo-textbox
+                        #subject
+                        placeholder="Enter subject"
+                        [fillMode]="'solid'"
+                    ></kendo-textbox>
+                </kendo-formfield>
+
+                <kendo-formfield>
+                    <kendo-label [for]="message" text="Message"></kendo-label>
+                    <kendo-textarea
+                        #message
+                        placeholder="Enter your message"
+                        [rows]="5"
+                        [fillMode]="'solid'"
+                    ></kendo-textarea>
+                </kendo-formfield>
+
+                <div class="k-form-buttons">
+                    <button kendoButton [themeColor]="'primary'" [fillMode]="'solid'">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="k-card">
+        <div class="k-card-body k-d-flex k-flex-col k-gap-4">
+            <div class="contact-info">
+                <kendo-icon name="location"></kendo-icon>
+                <p>123 Street Name, City, Country</p>
+            </div>
+            <div class="contact-info">
+                <kendo-icon name="email"></kendo-icon>
+                <p>contact&#64;example.com</p>
+            </div>
+            <div class="contact-info">
+                <kendo-icon name="phone"></kendo-icon>
+                <p>+1 234 567 8900</p>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -13,20 +13,16 @@ import {DialogsModule} from '@progress/kendo-angular-dialog';
 import { LoaderModule } from '@progress/kendo-angular-indicators';
 import { CardModule } from '@progress/kendo-angular-layout';
 import { LabelModule } from '@progress/kendo-angular-label';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 
 @NgModule({
   declarations: [],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+ 
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    CommonModule, 
+    ReactiveFormsModule, 
     GridModule,
     DialogsModule,
     DateInputsModule,
@@ -44,6 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
       useClass: AuthInterceptorService,
       multi: true,
     },
+
+    
   ],
   bootstrap: [],
 })

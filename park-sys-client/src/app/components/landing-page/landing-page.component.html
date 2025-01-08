@@ -1,0 +1,46 @@
+<!-- Banner Section -->
+<div class="banner">
+    <div class="banner-content">
+      <h1>Welcome to EasyPark</h1>
+      <p>Your ultimate solution for hassle-free parking.</p>
+      <button kendoButton [routerLink]="'/Reservation'" themeColor="primary" size="large">
+        Reserve Now!
+      </button>
+    </div>
+  </div>
+  
+  <!-- Features Section -->
+  <div class="features-section">
+    <div class="feature">
+      <kendo-icon name="clock" size="large"></kendo-icon>
+      <h3>Real-Time Availability</h3>
+      <p>Check parking spot availability in real-time.</p>
+    </div>
+    <div class="feature">
+      <kendo-icon name="map-marker" size="large"></kendo-icon>
+      <h3>Easy Navigation</h3>
+      <p>Find the nearest parking spots with ease.</p>
+    </div>
+    <div class="feature">
+      <kendo-icon name="coins" size="large"></kendo-icon>
+      <h3>Affordable Rates</h3>
+      <p>Competitive pricing to suit your needs.</p>
+    </div>
+  </div>
+  
+  <!-- Call to Action Section -->
+  <div class="cta-section">
+    <h2>Join Thousands of Happy Parkers</h2>
+    <button kendoButton [routerLink]="'/auth/register'" themeColor="primary" size="large">
+      Sign Up Now
+    </button>
+  </div>
+  
+  <!-- Footer Navigation -->
+  <nav class="footer-nav">
+    <ul>
+      <li><a [routerLink]="'/aboutus'">About Us</a></li>
+      <li><a [routerLink]="'/contact'">Contact</a></li>
+      <li><a [routerLink]="'/faq'">FAQ</a></li>
+    </ul>
+  </nav>

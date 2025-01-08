@@ -6,6 +6,7 @@
     <li *ngIf="isLoggedIn"><a (click)="payments()">Payments</a></li>
     <li *ngIf="isLoggedIn"><a (click)="reservations()">Reservations</a></li>
     <li *ngIf="isLoggedIn"><a (click)="users()">Users</a></li>
+    <li *ngIf="!isLoggedIn"><a (click)="home()">Home</a></li>
     <li *ngIf="!isLoggedIn"><a (click)="login()">Login</a></li>
     <li *ngIf="!isLoggedIn"><a (click)="register()">Register</a></li>
     <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>

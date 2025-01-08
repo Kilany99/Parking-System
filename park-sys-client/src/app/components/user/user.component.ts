@@ -4,8 +4,6 @@ import { UserDto, CreateUserDto, UpdateUserDto } from '../../models/DTOs/user.dt
 import { GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../..//modules/shared/shared.module';
-import { AppModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
@@ -17,6 +15,7 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -50,6 +49,7 @@ export class UserComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required]),
       role: new FormControl('', [Validators.required]),
+      password: new FormControl('', []),
     });
   }
 

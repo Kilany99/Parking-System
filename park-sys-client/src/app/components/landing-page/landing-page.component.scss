@@ -1,0 +1,154 @@
+
+$kendo-theme-primary: #ff4081;
+$kendo-theme-text: #333;
+.banner {
+    background-image: url('/assets/parking-banner1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+    color: #000F;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+    .banner-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-shadow: #333;
+  
+      h1 {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      }
+  
+      p {
+        font-size: 1.5em;
+        margin-bottom: 1em;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      }
+  
+      button[kendoButton] {
+        font-size: 1.2em;
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+  }
+.features-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 20px;
+
+    .feature {
+        text-align: center;
+        max-width: 300px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 20px;
+
+        &:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-style: hidden;
+        }
+
+        kendo-icon {
+            color: $kendo-theme-primary;
+            margin-bottom: 0.5em;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: darken($kendo-theme-primary, 10%);
+            }
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: $kendo-theme-primary;
+            }
+        }
+
+        p {
+            font-size: 1em;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: lighten($kendo-theme-text, 20%);
+            }
+        }
+    }
+}
+  
+  .cta-section {
+    background-color: $kendo-theme-primary;
+    color: #fff;
+    text-align: center;
+    padding: 80px 20px;
+  
+    h2 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+    }
+  
+    button[kendoButton] {
+      font-size: 1.2em;
+    }
+  }
+  
+  .footer-nav {
+    background-color: #f7f7f7;
+    padding: 20px;
+  
+    ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+  
+      li {
+        margin: 0 15px;
+  
+        a {
+          color: $kendo-theme-text;
+          text-decoration: none;
+          font-size: 1em;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .features-section {
+      flex-direction: column;
+      align-items: center;
+  
+      .feature {
+        margin-bottom: 40px;
+      }
+    }
+  
+    .banner .banner-content h1 {
+      font-size: 2.5em;
+    }
+  }

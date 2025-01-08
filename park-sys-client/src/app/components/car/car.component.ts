@@ -2,11 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../../services/car.service';
 import { CarDto } from '../../models/DTOs/car.dto';
-import { SharedModule } from '../../modules/shared/shared.module';
-import { AppModule } from '../../app.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
@@ -17,9 +14,10 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
   selector: 'app-car',
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss'],
-  providers: [provideAnimations()],
+  standalone: true,
+
   imports: [
-     CommonModule,
+        CommonModule,
         FormsModule,
         GridModule, // Import GridModule here
         InputsModule,
@@ -29,7 +27,7 @@ import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
         ReactiveFormsModule,
         DropDownListModule,
   ],
-})
+})  
 export class CarComponent implements OnInit {
   cars: CarDto[] = [];
   selectedCar ={ id: 0, plateNumber: '', model: '', color: '' }; ;
