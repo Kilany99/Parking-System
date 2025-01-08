@@ -6,23 +6,28 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
 
     kendo-card {
         padding: 20px;
         border: 1px solid #e0e0e0;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        align-items: center;
 
         kendo-card-header {
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 10px;
             margin-bottom: 20px;
+            align-items: center;
 
             h2 {
                 margin: 0;
                 font-size: 1.5em;
-                color: #333;
+                color: #ff6358; // Kendo primary color
+                text-align: center;
             }
+            
         }
 
         kendo-card-body {
@@ -30,15 +35,18 @@
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
+                align-items: center;
 
                 .form-group {
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
+                    align-items: center;
 
                     label {
                         font-weight: bold;
-                        color: #555;
+                        color: #656565; // Kendo text color
+                        text-align: center;
                     }
 
                     input,
@@ -47,13 +55,15 @@
                         border: 1px solid #ccc;
                         border-radius: 4px;
                         font-size: 1em;
+                        text-align: center;
+                        color: #424242; // Kendo default text color
                     }
                 }
 
                 button[kendoButton] {
-                    align-self: flex-start;
+                    align-self: center;
                     padding: 10px 20px;
-                    background-color: #007bff;
+                    background-color: #ff6358; // Kendo primary color
                     color: #fff;
                     border: none;
                     border-radius: 4px;
@@ -66,14 +76,11 @@
                 }
             }
 
-            .error-message {
-                color: red;
-                font-weight: bold;
-            }
-
             ul {
                 list-style-type: none;
                 padding: 0;
+                text-align: center;
+                color: #424242; // Kendo default text color
 
                 li {
                     padding: 10px 0;

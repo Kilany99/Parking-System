@@ -7,8 +7,12 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 import { LoaderModule } from '@progress/kendo-angular-indicators';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LabelModule } from '@progress/kendo-angular-label';
-import { ReservationDto } from '../../services/reservation.service';
 import { ReservationService } from '../../services/reservation.service';
+import { ReservationDto } from '../../models/DTOs/reservation.dto';
+import { CarService } from '../../services/car.service';
+import { ParkingZoneService } from '../../services/parking-zone.service';
+import { CarDto } from '../../models/DTOs/car.dto';
+import { ParkingZoneDto } from '../../models/DTOs/parking-zone.dto';
 @Component({
   selector: 'app-reservation',
   standalone: true,
@@ -26,23 +30,33 @@ import { ReservationService } from '../../services/reservation.service';
   styleUrl: './reservation.component.scss'
 })
 export class ReservationComponent implements OnInit {
-  myReservations: ReservationDto[] = {} as ReservationDto[];
+  myReservations: ReservationDto[] = [];
   loading = false;
   showFeeDialog = false;
   calculatedFee = 0;
   reservationForm: FormGroup;
-  carId : number = 0;
   sort: any[] = [];
+  availableCars: CarDto[] = [];
+  availableParkingZones: ParkingZoneDto[] = [];
 
-  constructor(private formBuilder: FormBuilder,private reservationService: ReservationService) {
+
+  
+  constructor(private formBuilder: FormBuilder,private reservationService: ReservationService,private carService: CarService
+    ,private parkingZoneService: ParkingZoneService) {
     this.reservationForm = this.formBuilder.group({
-      carId: ['', [Validators.required, Validators.min(1)]]
+      carId: ['', [Validators.required, Validators.min(1)]],
+      parkingSpotId: ['', [Validators.required, Validators.min(1)]],
     });
   }
+  
 
   ngOnInit(): void {
     // Load initial reservations
     this.loadReservations();
+
+    this.getAvailableCars();
+
+    this.getParkingZones();
   }
 
   sortChange(sort: any): void {
@@ -52,8 +66,10 @@ export class ReservationComponent implements OnInit {
       const dir = this.sort[0].dir === 'asc' ? 1 : -1;
       const field = this.sort[0].field;
       
-      if (a[field as keyof ReservationDto] < b[field as keyof ReservationDto]) return -1 * dir;
-      if (a[field as keyof ReservationDto] > b[field as keyof ReservationDto]) return 1 * dir;
+      const aValue = a[field as keyof ReservationDto] ?? '';
+      const bValue = b[field as keyof ReservationDto] ?? '';
+      if (aValue < bValue) return -1 * dir;
+      if (aValue > bValue) return 1 * dir;
       return 0;
     });
   }
@@ -113,10 +129,9 @@ export class ReservationComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  createReservation(): void {
     if (this.reservationForm.valid) {
       this.loading = true;
-      // Implement create reservation logic
       this.reservationService.createReservation(this.reservationForm.value).subscribe({
         next: (reservation) => {
           this.myReservations.push(reservation);
@@ -134,4 +149,45 @@ export class ReservationComponent implements OnInit {
   closeFeeDialog(): void {
     this.showFeeDialog = false;
   }
+
+  getAvailableCars(): void {
+    this.loading = true;
+    this.carService.getMyCars().subscribe({
+      next: (cars) => {
+        if (Array.isArray(cars)) {
+          this.availableCars = cars;
+        } else {
+          console.error('Invalid response format');
+          this.availableCars = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error loading cars:', error);
+        this.availableCars = [];
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
+  getParkingZones(): void {
+    this.loading = true;
+    this.parkingZoneService.getParkingZones().subscribe({
+      next: (parkingZones) => {
+        if (Array.isArray(parkingZones)) {
+          this.availableParkingZones = parkingZones;
+        } else {
+          console.error('Invalid response format');
+          this.availableParkingZones = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error loading parking zones:', error);
+        this.availableParkingZones = [];
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }  
 }

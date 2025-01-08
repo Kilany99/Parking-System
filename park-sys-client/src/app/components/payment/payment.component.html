@@ -1,5 +1,5 @@
-<div class="payment-container">
-    <kendo-card>
+<div class="payment-container" style="width: 80%; margin: 0 auto;">
+    <kendo-card style="margin-bottom: 20px;">
         <kendo-card-header>
             <h2>Payment Details</h2>
         </kendo-card-header>
@@ -20,11 +20,17 @@
                 <div class="form-group">
                     <label for="method">Payment Method</label>
                     <select id="method" [(ngModel)]="paymentData.method" type = "number" name="method" required>
-                        <option *ngFor="let method of paymentMethods" [value]="paymentData.method">{{ method }}</option>
+                        <option *ngFor="let method of paymentMethods" [value]="method">
+                            {{ method === 0 ? 'Cash' : 
+                               method === 1 ? 'CreditCard' : 
+                               method === 2 ? 'DebitCard' :
+                               method === 3 ? 'MobilePay' : 'Unknown' }}
+                        </option>
                     </select>
+                
                 </div>
                
-                <button kendoButton type="submit" [disabled]="loading || paymentForm.invalid!">Process Payment</button>
+                <button kendoButton  type="submit" [disabled]="loading || paymentForm.invalid!">Process Payment</button>
             </form>
             <div *ngIf="error" class="error-message">{{ error }}</div>
         </kendo-card-body>
@@ -35,14 +41,44 @@
             <h2>My Payments</h2>
         </kendo-card-header>
         <kendo-card-body>
-            <button kendoButton (click)="loadMyPayments()" [disabled]="loading">Load My Payments</button>
-            <ul>
-                <li *ngFor="let payment of payments">
-                    <label>Amount:</label> - <label>Method:</label>
-                    <br>
-                    {{ payment.amount }} - {{ payment.method }}
-                </li>
-            </ul>
+            <div style="text-align: center;">
+                <button kendoButton (click)="loadMyPayments()" [disabled]="loading"
+                style="
+                padding: 10px 20px;
+                background-color: #ff6358; 
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                &:disabled {
+                    background-color: #ccc;
+                    cursor: not-allowed;
+                }">Load My Payments</button>
+            </div>
+
+                <br>
+                <br>
+            <kendo-grid [data]="payments" [sortable]="true">
+                <kendo-grid-column field="amount" title="Amount" [sortable]="true"></kendo-grid-column>
+                <kendo-grid-column field="method" title="Method" [sortable]="true">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.method === 0 ? 'Cash' : 
+                           dataItem.method === 1 ? 'CreditCard' : 
+                           dataItem.method === 2 ? 'DebitCard':
+                           dataItem.method === 3 ? 'MobilePay' : 'Unknown' }}
+                    </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="status" title="Status" [sortable]="true">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.status === 0 ? 'Pending' : 
+                               dataItem.status === 1 ? 'Completed' : 
+                               dataItem.status === 2 ? 'Failed':
+                               dataItem.status === 3 ? 'Refunded' : 'Unknown' }}
+                        </ng-template>
+                        </kendo-grid-column>
+            </kendo-grid>
         </kendo-card-body>
     </kendo-card>
 </div>
+

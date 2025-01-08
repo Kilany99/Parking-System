@@ -3,15 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Environment } from '../../environments/environment';
 import { AuthService } from '../modules/auth/services/auth.service';
-export interface ReservationDto {
-  id: number;
-  // Add other properties as needed
-}
+import { ReservationDto,CreateReservationDto } from '../models/DTOs/reservation.dto';
 
-export interface CreateReservationDto {
-  carId: number;
-  // Add other properties as needed
-}
 
 @Injectable({
   providedIn: 'root'

@@ -7,7 +7,7 @@
                 [sort]="sort"
                 (sortChange)="sortChange($event)">
         <kendo-grid-column field="id" title="Reservation ID" Width="100" [sortable]="true"></kendo-grid-column>
-        <kendo-grid-column field="carId" title="Car ID" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="car.id" title="Car ID" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="createdAt" title="Created At" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="status" title="Status" Width="100" [sortable]="true">
             <ng-template kendoGridCellTemplate let-dataItem>
@@ -36,26 +36,22 @@
     </kendo-grid>
 </div>
     <!-- New Reservation Form -->
-    <div class="new-reservation-form">
-        <h3>Create New Reservation</h3>
-        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-            <kendo-formfield>
-                <kendo-label [for]="carId" text="Car ID"></kendo-label>
-                <kendo-numerictextbox
-                    [id]="carId"
-                    formControlName="carId"
-                    [min]="1"
-                    [step]="1">
-                </kendo-numerictextbox>
-            </kendo-formfield>
-
-            <div class="form-buttons">
-                <button kendoButton [primary]="true" type="submit" [disabled]="!reservationForm.valid">
-                    Create Reservation
-                </button>
-            </div>
-        </form>
-    </div>
+     <h2>Create New Parking Reservation</h2>
+    <form [formGroup]="reservationForm" (ngSubmit)="createReservation()">
+        <div class="form-group">
+            <label for="car.id">Available Cars:</label>
+            <select id="availableCars" formControlName="carId" class="form-control">
+                <option *ngFor="let car of availableCars" [value]="car.id">{{ car.model }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="parkingSpotId">Available Parking Zones:</label>
+            <select id="availableParkingZones" formControlName="parkingSpotId" class="form-control">
+                <option *ngFor="let zone of availableParkingZones" [value]="zone.id">{{ zone.name }}</option>
+            </select>
+        </div>
+        <button kendoButton type="submit" [disabled]="reservationForm.invalid">Reserve</button>
+    </form>
 
     <!-- Fee Display Dialog -->
     <kendo-dialog *ngIf="showFeeDialog" (close)="closeFeeDialog()">

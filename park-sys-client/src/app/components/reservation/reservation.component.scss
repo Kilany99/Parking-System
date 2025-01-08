@@ -2,7 +2,12 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-
+    h2 {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #9d3c3c;
+    }
     kendo-grid {
         margin-bottom: 30px;
 
@@ -25,6 +30,12 @@
         h3 {
             margin-top: 0;
             margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         kendo-formfield {
@@ -54,5 +65,51 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+}
+h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #9d3c3c;
+}
+
+form {
+    .form-group {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select.form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+    }
+
+    button[kendoButton] {
+        background-color: #ff6358;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: darken($color: #ff6358, $amount: 20%);
+        }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     }
 }
