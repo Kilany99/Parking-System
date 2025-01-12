@@ -2,7 +2,7 @@
 @import '@progress/kendo-theme-default/dist/all.scss';
 /* Customize Kendo Theme Variables (Optional) */
 /* You can override Kendo theme variables before importing */
-$kendo-theme-primary: #3a7bd5; /* Customize the primary color */
+$kendo-theme-primary: #ff4081; /* Customize the primary color */
 $kendo-theme-border-radius: 8px;
 $kendo-theme-text : #2d3436;
 $kendo-theme-error: #e74c3c;
@@ -44,7 +44,6 @@ $kendo-theme-error: #e74c3c;
           color: $kendo-theme-text;
         }
 
-        /* Adjust input styles */
         .k-input {
           width: 100%;
         }
@@ -66,9 +65,7 @@ $kendo-theme-error: #e74c3c;
         }
       }
 
-      .login-button {
-        width: 100%;
-        margin-top: 1rem;
+        
 
         /* Button styles */
         .login-button {
@@ -77,10 +74,12 @@ $kendo-theme-error: #e74c3c;
           color: #fff;
           padding: 0.5rem 1rem;
           border: none;
+          width: 100%;
+          margin-top: 1rem;
           cursor: pointer;
 
           &:hover {
-            background-color: tint($kendo-theme-primary, 10%);
+            background-color: darken($kendo-theme-primary, 20%);
           }
         }
 
@@ -100,11 +99,118 @@ $kendo-theme-error: #e74c3c;
       }
     }
   }
-}
+
 
 /* Responsive Design */
 @media (max-width: 576px) {
   .login-card {
     padding: 1.5rem;
+  }
+}
+/* Forgot Password Email Input Styles */
+.forgot-password-container {
+  .k-form-field {
+    margin-bottom: 1.5rem;
+
+    .k-label {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: $kendo-theme-text;
+    }
+
+    .k-input {
+      width: 100%;
+      border-radius: $kendo-theme-border-radius;
+
+      &:focus {
+        border-color: $kendo-theme-primary;
+        box-shadow: 0 0 0 3px rgba($kendo-theme-primary, 0.2);
+      }
+    }
+
+    .k-form-error {
+      color: $kendo-theme-error;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .k-button {
+    background-color: $kendo-theme-primary;
+    border-radius: $kendo-theme-border-radius;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: tint($kendo-theme-primary, 10%);
+    }
+
+    &:disabled {
+      background-color: lighten($kendo-theme-primary, 20%);
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* Reset Password Dialog Styles */
+.reset-password-dialog {
+  .k-dialog-titlebar {
+    background-color: $kendo-theme-primary;
+    color: #fff;
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: $kendo-theme-text;
+  }
+
+  .k-form-field {
+    margin-bottom: 1.5rem;
+
+    .k-label {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: $kendo-theme-text;
+    }
+
+    .k-input {
+      width: 100%;
+      border-radius: $kendo-theme-border-radius;
+
+      &:focus {
+        border-color: $kendo-theme-primary;
+        box-shadow: 0 0 0 3px rgba($kendo-theme-primary, 0.2);
+      }
+    }
+
+    .k-form-error {
+      color: $kendo-theme-error;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  }
+
+  .k-button {
+    background-color: $kendo-theme-primary;
+    border-radius: $kendo-theme-border-radius;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: tint($kendo-theme-primary, 10%);
+    }
+    &:disabled {
+      background-color: lighten($kendo-theme-primary, 20%);
+      cursor: not-allowed;
+    }
   }
 }

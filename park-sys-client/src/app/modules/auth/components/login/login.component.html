@@ -49,6 +49,91 @@
 
       <!-- Additional Links -->
       <a routerLink="/register" class="k-link">Don't have an account? Register</a>
+      <a (click)="onForgotPassword()" class="k-link">Forgot Password?</a>
     </form>
+
+    <!-- Forgot Password Email Input -->
+    <div *ngIf="showForgotPasswordEmailInput" class="forgot-password-container">
+      <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPasswordSubmit()">
+        <div class="k-form-field">
+          <label for="forgotPasswordEmail" class="k-label">Enter your email</label>
+          <input
+            kendoTextBox
+            formControlName="forgotPasswordEmail"
+            id="forgotPasswordEmail"
+            type="email"
+            class="k-input"
+          />
+          <span
+            class="k-form-error"
+            *ngIf="forgotPasswordEmail?.invalid && forgotPasswordEmail?.touched"
+          >
+            Please enter a valid email.
+          </span>
+        </div>
+        <button
+          type="submit"
+          class="k-button"
+          [disabled]="forgotPasswordForm.invalid"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <!-- Reset Password Dialog -->
+    <kendo-dialog *ngIf="showResetPasswordDialog" (close)="onDialogClose()" class="reset-password-dialog">
+      <kendo-dialog-titlebar>
+        Reset Password
+      </kendo-dialog-titlebar>
+      <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()">
+        <h3>Enter the token that you have recived on your email address</h3>
+
+        <!-- Token Field -->
+        <div class="k-form-field">
+          <label for="token" class="k-label">Token</label>
+          <input
+            kendoTextBox
+            formControlName="token"
+            id="token"
+            type="text"
+            class="k-input"
+          />
+          <span
+            class="k-form-error"
+            *ngIf="token?.invalid && token?.touched"
+          >
+            Token is required.
+          </span>
+        </div>
+
+        <!-- New Password Field -->
+        <div class="k-form-field">
+          <label for="newPassword" class="k-label">New Password</label>
+          <input
+            kendoTextBox
+            formControlName="newPassword"
+            id="newPassword"
+            type="password"
+            class="k-input"
+          />
+          <span
+            class="k-form-error"
+            *ngIf="newPassword?.invalid && newPassword?.touched"
+          >
+            New password is required.
+          </span>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="k-button"
+          [disabled]="resetPasswordForm.invalid"
+        >
+          Reset Password
+        </button>
+      </form>
+    </kendo-dialog>
   </div>
 </div>

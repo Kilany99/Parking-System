@@ -16,3 +16,12 @@ export interface AuthResponseDto {
     name: string;
     rol: string;
 }
+
+export interface ForgotPasswordDto{
+    email:string;
+}
+
+export interface ResetPasswordDto{
+    newPassword:string;
+    token: string;
+}

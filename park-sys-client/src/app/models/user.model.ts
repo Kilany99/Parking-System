@@ -6,4 +6,7 @@ export interface User {
     passwordHash: string;
     role: string;
     createdAt: Date;
+    resetPasswordToken?:string;
+    resetPasswordTokenExpiration?:Date
+
 }

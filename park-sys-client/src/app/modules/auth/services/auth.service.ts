@@ -2,7 +2,7 @@ import { Injectable ,Inject,PLATFORM_ID} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthResponseDto,LoginDto, RegisterDto } from '../../../models/DTOs/auth.dto';
+import { AuthResponseDto,ForgotPasswordDto,LoginDto, RegisterDto, ResetPasswordDto } from '../../../models/DTOs/auth.dto';
 import { Environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
@@ -61,6 +61,21 @@ get authStatus$(): Observable<boolean> {
     );
   }
 
+  forgotPassword(dto: ForgotPasswordDto): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/forgot-password`, { dto }).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+
+  resetPassword(dto:ResetPasswordDto): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/auth/reset-password`, { dto }).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
   setToken(token: string): void {
     if (this.isBrowser) {
       localStorage.setItem(this.tokenKey, token);
