@@ -1,8 +1,7 @@
 /* Import Kendo UI Theme */
 @import '@progress/kendo-theme-default/dist/all.scss';
-/* Customize Kendo Theme Variables (Optional) */
-/* You can override Kendo theme variables before importing */
-$kendo-theme-primary: #ff4081; /* Customize the primary color */
+
+$kendo-theme-primary: #ff4081; 
 $kendo-theme-border-radius: 8px;
 $kendo-theme-text : #2d3436;
 $kendo-theme-error: #e74c3c;
