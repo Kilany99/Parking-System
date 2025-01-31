@@ -13,6 +13,8 @@ import { CarService } from '../../services/car.service';
 import { ParkingZoneService } from '../../services/parking-zone.service';
 import { CarDto } from '../../models/DTOs/car.dto';
 import { ParkingZoneDto } from '../../models/DTOs/parking-zone.dto';
+import { ParkingSpot } from '../../models/parking-spot.model';
+import { ParkingSpotDto } from '../../models/DTOs/parking-zone.dto';
 @Component({
   selector: 'app-reservation',
   standalone: true,
@@ -38,6 +40,7 @@ export class ReservationComponent implements OnInit {
   sort: any[] = [];
   availableCars: CarDto[] = [];
   availableParkingZones: ParkingZoneDto[] = [];
+  availableParkingSpots : ParkingSpotDto [] = [];
 
 
   
@@ -46,6 +49,7 @@ export class ReservationComponent implements OnInit {
     this.reservationForm = this.formBuilder.group({
       carId: ['', [Validators.required, Validators.min(1)]],
       parkingSpotId: ['', [Validators.required, Validators.min(1)]],
+      parkingzoneId: ['', [Validators.required, Validators.min(1)]],
     });
   }
   
@@ -189,5 +193,20 @@ export class ReservationComponent implements OnInit {
         this.loading = false;
       }
     });
-  }  
+  } 
+  getParkingSpots(parkingZoneId: number): void {
+    this.loading = true;
+    this.parkingZoneService.getAvailableSpots(parkingZoneId).subscribe({
+      next: (parkingSpots) => {
+        this.availableParkingSpots = parkingSpots;  // Store the available spots
+      },
+      error: (error) => {
+        console.error('Error loading parking spots:', error);
+        this.availableParkingSpots = [];
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
 }

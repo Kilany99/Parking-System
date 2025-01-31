@@ -4,6 +4,7 @@ import { SessionStatus } from '../enums/session-status.enum';
 export interface CreateReservationDto {
     carId: number;
     parkingSpotId: number;
+    parkingZoneId: number;
 }
 
 export interface ReservationDto {

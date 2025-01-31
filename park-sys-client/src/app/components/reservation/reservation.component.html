@@ -44,12 +44,21 @@
                 <option *ngFor="let car of availableCars" [value]="car.id">{{ car.model }}</option>
             </select>
         </div>
+        <!-- Parking Zones Dropdown -->
         <div class="form-group">
-            <label for="parkingSpotId">Available Parking Zones:</label>
-            <select id="availableParkingZones" formControlName="parkingSpotId" class="form-control">
+            <label for="parkingZoneId">Available Parking Zones:</label>
+            <select id="availableParkingZones" formControlName="parkingZoneId" class="form-control">
                 <option *ngFor="let zone of availableParkingZones" [value]="zone.id">{{ zone.name }}</option>
             </select>
         </div>
+        <!-- Parking Spots Dropdown (dynamically populated based on selected zone) -->
+    <div class="form-group">
+        <label for="parkingSpotId">Available Parking Spots:</label>
+        <select id="availableParkingSpots" formControlName="parkingSpotId" class="form-control" [disabled]="availableParkingSpots.length === 0">
+            <option *ngFor="let spot of availableParkingSpots" [value]="spot.id">{{ spot.spotNumber }}</option>
+        </select>
+    </div>
+       
         <button kendoButton type="submit" [disabled]="reservationForm.invalid">Reserve</button>
     </form>
 

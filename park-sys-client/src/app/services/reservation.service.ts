@@ -41,6 +41,16 @@ export class ReservationService {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
     return this.http.get<ReservationDto>(`${this.apiUrl}/car/${carId}/active`,{headers});
   }
+
+  startParking(qrCode: string): Observable<ReservationDto> {
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.post<ReservationDto>(`${this.apiUrl}/start`, { qrCode }, { headers });
+  }
+  
+  endParking(qrCode: string): Observable<ReservationDto> {
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.post<ReservationDto>(`${this.apiUrl}/end`, { qrCode }, { headers });
+  }
   private getToken(): string {
     return this.token;
   }
