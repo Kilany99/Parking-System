@@ -1,5 +1,5 @@
 import { CarDto } from './car.dto';
-import { ParkingSpotDto } from './parking-zone.dto';
+import { ParkingSpotDto, ParkingZoneDto } from './parking-zone.dto';
 import { SessionStatus } from '../enums/session-status.enum';
 export interface CreateReservationDto {
     carId: number;
@@ -17,5 +17,6 @@ export interface ReservationDto {
     status: SessionStatus;
     car: CarDto;
     parkingSpot: ParkingSpotDto;
+    parkingZone: ParkingZoneDto;
 }
 

@@ -1,6 +1,7 @@
 export enum spotStatus {
   Available = 0,
   Occupied = 1,
-  Maintenance = 2,
-  OuOutOfService = 3
+  Reserved = 2,
+  Maintenance = 3,
+  OutOfService = 4
 }

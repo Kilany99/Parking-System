@@ -1,5 +1,8 @@
 import { spotStatus } from '../enums/spot-status.enum';
 import { spotType } from '../enums/spot-type.enum';
+import { Reservation } from '../reservation.model';
+import { CarDto } from './car.dto';
+import { ReservationDto } from './reservation.dto';
 export interface CreateParkingZoneDto {
     name: string;
     totalFloors: number;
@@ -41,5 +44,8 @@ export interface ParkingSpotDto {
     floor: number;
     status: spotStatus;
     type: spotType;
+    reservation: ReservationDto;
+    parkingZone: ParkingZoneDto    
 }
+
 

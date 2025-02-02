@@ -21,25 +21,68 @@
         <h3>Available Spaces</h3>
       </kendo-card-header>
       <kendo-card-body>
-        <span class="stat-number">{{availableSpaces}}</span>
+        <span class="stat-number">{{ availableSpaces }}</span>
       </kendo-card-body>
     </kendo-card>
-
+  
+    <kendo-card class="stat-card">
+      <kendo-card-header>
+        <h3>Occupied Spaces</h3>
+      </kendo-card-header>
+      <kendo-card-body>
+        <span class="stat-number">{{ occupiedSpaces }}</span>
+      </kendo-card-body>
+    </kendo-card>
+  
     <kendo-card class="stat-card">
       <kendo-card-header>
         <h3>Today's Revenue</h3>
       </kendo-card-header>
       <kendo-card-body>
-        <span class="stat-number">{{todayRevenue | currency}}</span>
+        <span class="stat-number">{{ todayRevenue | currency }}</span>
+      </kendo-card-body>
+    </kendo-card>
+  
+    <kendo-card class="stat-card">
+      <kendo-card-header>
+        <h3>Total Reservations</h3>
+      </kendo-card-header>
+      <kendo-card-body>
+        <span class="stat-number">{{ totalReservations }}</span>
+      </kendo-card-body>
+    </kendo-card>
+  
+    <kendo-card class="stat-card">
+      <kendo-card-header>
+        <h3>Check-Ins</h3>
+      </kendo-card-header>
+      <kendo-card-body>
+        <span class="stat-number">{{ totalCheckIns }}</span>
+      </kendo-card-body>
+    </kendo-card>
+  
+    <kendo-card class="stat-card">
+      <kendo-card-header>
+        <h3>Check-Outs</h3>
+      </kendo-card-header>
+      <kendo-card-body>
+        <span class="stat-number">{{ totalCheckOuts }}</span>
       </kendo-card-body>
     </kendo-card>
   </div>
-
+  
   <!-- Recent Activity Chart -->
   <kendo-chart>
     <kendo-chart-title text="Parking Activity"></kendo-chart-title>
     <kendo-chart-series>
       <kendo-chart-series-item type="line" [data]="parkingActivity" field="value" categoryField="time">
+      </kendo-chart-series-item>
+    </kendo-chart-series>
+  </kendo-chart>
+  <kendo-chart>
+    <kendo-chart-title text="Today's Activity"></kendo-chart-title>
+    <kendo-chart-series>
+      <kendo-chart-series-item type="bar" [data]="activityChartData" field="value" categoryField="category">
       </kendo-chart-series-item>
     </kendo-chart-series>
   </kendo-chart>

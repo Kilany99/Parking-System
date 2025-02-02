@@ -51,6 +51,15 @@ export class ReservationService {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
     return this.http.post<ReservationDto>(`${this.apiUrl}/end`, { qrCode }, { headers });
   }
+  getTodayRevenue() : Observable<any>{
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.get<any>(`${this.apiUrl}/today-revenue`,{headers});
+
+  }
+  getTodayActivity(): Observable<any> {
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.get(`${this.apiUrl}/today-activity`,{headers});
+  }
   private getToken(): string {
     return this.token;
   }

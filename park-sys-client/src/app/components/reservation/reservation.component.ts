@@ -15,6 +15,7 @@ import { CarDto } from '../../models/DTOs/car.dto';
 import { ParkingZoneDto } from '../../models/DTOs/parking-zone.dto';
 import { ParkingSpot } from '../../models/parking-spot.model';
 import { ParkingSpotDto } from '../../models/DTOs/parking-zone.dto';
+import { spotStatus } from '../../models/enums/spot-status.enum';
 @Component({
   selector: 'app-reservation',
   standalone: true,
@@ -49,7 +50,7 @@ export class ReservationComponent implements OnInit {
     this.reservationForm = this.formBuilder.group({
       carId: ['', [Validators.required, Validators.min(1)]],
       parkingSpotId: ['', [Validators.required, Validators.min(1)]],
-      parkingzoneId: ['', [Validators.required, Validators.min(1)]],
+      parkingZoneId: ['', [Validators.required, Validators.min(1)]],
     });
   }
   
@@ -196,7 +197,7 @@ export class ReservationComponent implements OnInit {
   } 
   getParkingSpots(parkingZoneId: number): void {
     this.loading = true;
-    this.parkingZoneService.getAvailableSpots(parkingZoneId).subscribe({
+    this.parkingZoneService.getSpots(parkingZoneId,spotStatus.Available).subscribe({
       next: (parkingSpots) => {
         this.availableParkingSpots = parkingSpots;  // Store the available spots
       },
@@ -209,4 +210,19 @@ export class ReservationComponent implements OnInit {
       }
     });
   }
+  
+  onParkingZoneChange(): void {
+    const selectedParkingZoneId = this.reservationForm.get('parkingZoneId')?.value;
+    console.log('Selected Parking Zone ID:', selectedParkingZoneId); // Debugging log
+    if (selectedParkingZoneId) {
+      this.getParkingSpots(selectedParkingZoneId);  // Load parking spots for the selected zone
+    }
+  }
+  onSpotClick(spot: ParkingSpotDto): void {
+    // Set the selected spot to the form control
+    this.reservationForm.patchValue({
+      parkingSpotId: spot.id
+    });
+  }
+
 }

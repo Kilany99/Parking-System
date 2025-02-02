@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ParkingZone } from '../models/parking-zone.model';
 import { Environment } from '../../environments/environment';
 import { AuthService } from '../modules/auth/services/auth.service';
 import { ParkingZoneDto, ParkingZoneStatusDto, ParkingSpotDto } from '../models/DTOs/parking-zone.dto';
-
+import { spotStatus } from '../models/enums/spot-status.enum';
 @Injectable({
   providedIn: 'root',
 })
@@ -35,13 +35,14 @@ export class ParkingZoneService {
   }
 
   // Get available spots in a zone
-  getAvailableSpots(id: number): Observable<ParkingSpotDto[]> {
+  getSpots(id: number,status:spotStatus ): Observable<ParkingSpotDto[]> {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
-    return this.http.get<ParkingSpotDto[]>(`${this.apiUrl}/${id}/available-spots`,{headers}).pipe(
+    const params = new HttpParams().set('status', status);
+    return this.http.get<ParkingSpotDto[]>(`${this.apiUrl}/${id}/available-spots`,{headers,params}).pipe(
       catchError(this.handleError)
     );
   }
-
+ 
   // Create a new parking zone
   createParkingZone(createDto: any): Observable<ParkingZoneDto> {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
@@ -49,7 +50,12 @@ export class ParkingZoneService {
       catchError(this.handleError)
     );
   }
-
+  getAllSpots(id: number): Observable<ParkingSpotDto[]> {
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.get<ParkingSpotDto[]>(`${this.apiUrl}/${id}/all-spots`, { headers }).pipe(
+        catchError(this.handleError)
+    );
+}
   private handleError(error: any) {
     console.error('An error occurred:', error);
     return throwError(error);

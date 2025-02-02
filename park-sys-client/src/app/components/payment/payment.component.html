@@ -1,5 +1,5 @@
-<div class="payment-container" style="width: 80%; margin: 0 auto;">
-    <kendo-card style="margin-bottom: 20px;">
+<div class="payment-container" style="width:80% ;margin: 0 auto;">
+    <kendo-card style="margin-bottom: 20px; width: 100%; max-width: 1500px; ">
         <kendo-card-header>
             <h2>Payment Details</h2>
         </kendo-card-header>
@@ -36,7 +36,7 @@
         </kendo-card-body>
     </kendo-card>
 
-    <kendo-card>
+    <kendo-card style="margin-bottom: 20px; width: 100%; max-width: 1500px; ">
         <kendo-card-header>
             <h2>My Payments</h2>
         </kendo-card-header>
@@ -77,6 +77,9 @@
                                dataItem.status === 3 ? 'Refunded' : 'Unknown' }}
                         </ng-template>
                         </kendo-grid-column>
+                    <kendo-grid-column field="createdAt" title="Created At" [sortable]="true"></kendo-grid-column>
+
+                    <kendo-grid-column field="completedAt" title="Completed At" [sortable]="true"></kendo-grid-column>
             </kendo-grid>
         </kendo-card-body>
     </kendo-card>

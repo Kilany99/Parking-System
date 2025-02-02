@@ -113,3 +113,41 @@ form {
         }
     }
 }
+
+.parking-spot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .parking-spot-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .parking-spot-box {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .parking-spot-box:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+  }
+  
+  .spot-number {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+  

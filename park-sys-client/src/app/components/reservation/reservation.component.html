@@ -22,13 +22,17 @@
         <kendo-grid-column field="totalAmount" title="Total Amount $" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="entryTime" title="Entry Time" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="exitTime" title="Exit Time" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="parkingSpot.spotNumber" title="Parking Spot" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="parkingZone.name" title="Parking Zone" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="qrCode" title="QR Code" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column title="Actions" Width="200">
             <ng-template kendoGridCellTemplate let-dataItem>
-                <button kendoButton (click)="calculateReservationFee(dataItem.id)">
+                <button *ngIf="dataItem.status === 1" kendoButton (click)="calculateReservationFee(dataItem.id)">
                     Calculate Fee
                 </button>
-                <button kendoButton [primary]="true" (click)="cancelReservation(dataItem.id)">
+        
+                <!-- Show 'Cancel' only for non-cancelled reservations -->
+                <button *ngIf="dataItem.status !== 3 &&dataItem.status !==2" kendoButton [primary]="true" (click)="cancelReservation(dataItem.id)">
                     Cancel
                 </button>
             </ng-template>
@@ -47,17 +51,21 @@
         <!-- Parking Zones Dropdown -->
         <div class="form-group">
             <label for="parkingZoneId">Available Parking Zones:</label>
-            <select id="availableParkingZones" formControlName="parkingZoneId" class="form-control">
-                <option *ngFor="let zone of availableParkingZones" [value]="zone.id">{{ zone.name }}</option>
+            <select id="availableParkingZones" formControlName="parkingZoneId" class="form-control" (change)="onParkingZoneChange()">
+              <option *ngFor="let zone of availableParkingZones" [value]="zone.id">{{ zone.name }}</option>
             </select>
-        </div>
+          </div>
         <!-- Parking Spots Dropdown (dynamically populated based on selected zone) -->
-    <div class="form-group">
-        <label for="parkingSpotId">Available Parking Spots:</label>
-        <select id="availableParkingSpots" formControlName="parkingSpotId" class="form-control" [disabled]="availableParkingSpots.length === 0">
-            <option *ngFor="let spot of availableParkingSpots" [value]="spot.id">{{ spot.spotNumber }}</option>
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="parkingSpotId">Available Parking Spots:</label>
+            <div class="parking-spot-grid">
+              <div *ngFor="let spot of availableParkingSpots" class="parking-spot-item" (click)="onSpotClick(spot)">
+                <div class="parking-spot-box">
+                  <span class="spot-number">{{ spot.spotNumber }}</span>
+                </div>  
+              </div>
+            </div>
+          </div>
        
         <button kendoButton type="submit" [disabled]="reservationForm.invalid">Reserve</button>
     </form>

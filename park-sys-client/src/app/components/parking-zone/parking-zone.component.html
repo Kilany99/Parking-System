@@ -17,8 +17,24 @@
     <h3>Zone Status</h3>
     <div *ngIf="zoneStatus" class="status-info">
         <p>Total Spots: {{ zoneStatus.totalSpots }}</p>
-        <p>Occupied Spots: {{ zoneStatus.totalSpots - zoneStatus.availableSpots }}</p>
+        <p>Occupied Spots: {{ zoneStatus.distribution.occupied }}</p>
+        <p>Reserved Spots: {{ zoneStatus.distribution.reserved }}</p>
+        <p>Maintenance Spots: {{ zoneStatus.distribution.maintenance }}</p>
         <p>Available Spots: {{ zoneStatus.availableSpots }}</p>
+    </div>
+    
+
+    <!-- status filter dropdown -->
+    <div class="status-filter">
+        <label>Filter by Status:</label>
+        <select [(ngModel)]="selectedStatus" (change)="onStatusChange()">
+            <option [value]="null">All</option>
+            <option [value]="SpotStatus.Available">Available</option>
+            <option [value]="SpotStatus.Occupied">Occupied</option>
+            <option [value]="SpotStatus.Reserved">Reserved</option>
+            <option [value]="SpotStatus.Maintenance">Maintenance</option>
+            <option [value]="SpotStatus.OutOfService">Out of Service</option>
+        </select>
     </div>
 
     <h3>Available Parking Spots</h3>
@@ -44,7 +60,30 @@
                        dataItem.type === 3 ? 'Electric' : 'Unknown' }}
                 </ng-template>
                 </kendo-grid-column>
+                <kendo-grid-column title="Plate Number" [sortable]="true">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.currentReservation?.car?.plateNumber || '-' }}
+                    </ng-template>
+                </kendo-grid-column>
         </kendo-grid>
+    </div>
+    <div *ngIf="zoneStatus">
+        <h3>Availability Per Floor</h3>
+        <kendo-grid
+        *ngIf="zoneStatus?.distribution?.availableByFloor"
+        [data]="getFloors(zoneStatus.distribution.availableByFloor)"
+        [height]="250"
+        [sortable]="true"
+    >
+        <kendo-grid-column field="floorNumber" title="Floor Number" [width]="150">
+        </kendo-grid-column>
+        
+        <kendo-grid-column field="spots" title="Available Spots" [width]="200">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span class="spot-count">{{ dataItem.spots }}</span>
+            </ng-template>
+        </kendo-grid-column>
+    </kendo-grid>
     </div>
 </div>
 <h3>Select Parking Zone Name to Show Spots Status</h3>
