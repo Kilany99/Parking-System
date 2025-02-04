@@ -8,7 +8,9 @@
     <kendo-grid-column field="hourlyRate" title="Hourly Rate" [sortable]="true"></kendo-grid-column>
     <kendo-grid-column field="isFull" title="Is Full" [sortable]="true">
         <ng-template kendoGridCellTemplate let-dataItem>
-            <span>{{ dataItem.isFull ? 'Yes' : 'No' }}</span>
+            <span [ngStyle]="{ 'color': getStatusColor(dataItem.isFull) }">
+                {{ dataItem.isFull ? 'Full' : 'Available' }}
+            </span>
         </ng-template>
     </kendo-grid-column>
 </kendo-grid>

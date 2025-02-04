@@ -149,5 +149,15 @@ getStatusName(status: number): string {
     case this.SpotStatus.OutOfService: return 'Out of Service';
     default: return 'Unknown';
   }
+  
+ }
+ getStatusColor(isFull: boolean): string {
+  if(isFull) {
+      return 'red'; // fully reserved
+  }
+  else{
+      return 'green';  // not full
 }
+     
+  }
 }

@@ -7,16 +7,18 @@
                 [sort]="sort"
                 (sortChange)="sortChange($event)">
         <kendo-grid-column field="id" title="Reservation ID" Width="100" [sortable]="true"></kendo-grid-column>
-        <kendo-grid-column field="car.id" title="Car ID" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column field="car.plateNumber" title="Car Plate Number" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="createdAt" title="Created At" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="status" title="Status" Width="100" [sortable]="true">
             <ng-template kendoGridCellTemplate let-dataItem>
+              <span [ngStyle]="{ 'color': getStatusColor(dataItem.status) }">
             {{
                 dataItem.status === 0 ? 'Reserved' :
                 dataItem.status === 1 ? 'Active' :
                 dataItem.status === 2 ? 'Completed' :
                 dataItem.status === 3 ? 'Cancelled' : ''
             }}
+                </span>
             </ng-template>
         </kendo-grid-column>
         <kendo-grid-column field="totalAmount" title="Total Amount $" Width="100" [sortable]="true"></kendo-grid-column>
@@ -24,7 +26,11 @@
         <kendo-grid-column field="exitTime" title="Exit Time" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="parkingSpot.spotNumber" title="Parking Spot" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="parkingZone.name" title="Parking Zone" Width="100" [sortable]="true"></kendo-grid-column>
-        <kendo-grid-column field="qrCode" title="QR Code" Width="100" [sortable]="true"></kendo-grid-column>
+        <kendo-grid-column title="QR Code">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <img *ngIf="dataItem.qrCode" [src]="'data:image/png;base64,' + dataItem.qrCode" alt="QR Code" />
+            </ng-template>
+          </kendo-grid-column>
         <kendo-grid-column title="Actions" Width="200">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <button *ngIf="dataItem.status === 1" kendoButton (click)="calculateReservationFee(dataItem.id)">
@@ -32,12 +38,16 @@
                 </button>
         
                 <!-- Show 'Cancel' only for non-cancelled reservations -->
-                <button *ngIf="dataItem.status !== 3 &&dataItem.status !==2" kendoButton [primary]="true" (click)="cancelReservation(dataItem.id)">
+                <button *ngIf="dataItem.status == 0" kendoButton [primary]="true" (click)="cancelReservation(dataItem.id)">
                     Cancel
                 </button>
             </ng-template>
         </kendo-grid-column>
     </kendo-grid>
+     <!-- Error Message Display for Reservation List -->
+     <p class="error-message" *ngIf="errorMessageResList">
+      {{ errorMessageResList }}
+    </p>
 </div>
     <!-- New Reservation Form -->
      <h2>Create New Parking Reservation</h2>
@@ -55,20 +65,32 @@
               <option *ngFor="let zone of availableParkingZones" [value]="zone.id">{{ zone.name }}</option>
             </select>
           </div>
-        <!-- Parking Spots Dropdown (dynamically populated based on selected zone) -->
-        <div class="form-group">
+              <!-- Parking Spots Dropdown (dynamically populated based on selected zone) -->
+          <div class="form-group">
             <label for="parkingSpotId">Available Parking Spots:</label>
             <div class="parking-spot-grid">
-              <div *ngFor="let spot of availableParkingSpots" class="parking-spot-item" (click)="onSpotClick(spot)">
-                <div class="parking-spot-box">
-                  <span class="spot-number">{{ spot.spotNumber }}</span>
-                </div>  
-              </div>
+              <ng-container *ngFor="let floor of groupedSpots | keyvalue">
+                <!-- Floor Heading -->
+                <h2>Floor {{ floor.key }}</h2>
+                <div *ngFor="let spot of floor.value" class="parking-spot-item">
+                  <div class="parking-spot-box"
+                      [ngClass]="{ 'selected-spot': isSelected(spot) }"
+                      (click)="onSpotClick(spot)">
+                    <span class="spot-number">{{ spot.spotNumber }}</span>
+                  </div>  
+                </div>
+              </ng-container>
             </div>
           </div>
-       
+
+      
+       <p>Please note that your reservation will be kept on-hold on "Reserved" status for 24H and after that the generated QR code will not be valid </p>
         <button kendoButton type="submit" [disabled]="reservationForm.invalid">Reserve</button>
     </form>
+      <!-- Error Message Display for Reservation Form -->
+      <p class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
 
     <!-- Fee Display Dialog -->
     <kendo-dialog *ngIf="showFeeDialog" (close)="closeFeeDialog()">
@@ -77,9 +99,23 @@
             <p>The calculated fee is: ${{ calculatedFee }}</p>
         </div>
         <kendo-dialog-actions>
-            <button kendoButton (click)="closeFeeDialog()">Close</button>
+            <button kendoButton (click)="closeFeeDialog()" class ="fee-button">Close</button>
         </kendo-dialog-actions>
     </kendo-dialog>
+
+     <!-- Cancellation  Dialog -->
+     <kendo-dialog *ngIf="showCnxDialog" (close)="closeCnxDialog()" style=" padding: 20px; text-align: center;
+     font-size: 1.2em;" >
+      <kendo-dialog-titlebar>Cancel Reservation</kendo-dialog-titlebar>
+      <div class="cancel-content">
+          <p>Please note that you can cancel the booking and you will be charged 20% of hourlyRate for each hour if more than 15 mins passed from the moment of making reservation. 
+             your calculated fee: ${{ calculatedFee }}</p>
+      </div>
+      <button kendoButton (click)="onCnxButtonClick(this.selectedCnxResId)" class="Confirm-cnx-button">Confirm Cancellation</button>
+      <kendo-dialog-actions>
+          <button kendoButton (click)="closeCnxDialog()" class="Confirm-cnx-button">Close</button>
+      </kendo-dialog-actions>
+  </kendo-dialog>
 
     <!-- Loading Indicator -->
     <kendo-loader *ngIf="loading" type="infinite-spinner"></kendo-loader>

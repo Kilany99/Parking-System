@@ -36,7 +36,6 @@ export class LoginComponent {
       forgotPasswordEmail: ['', [Validators.required, Validators.email]],
     });
   }
-
   onSubmit(): void {
     if (this.loginForm.valid) {
       const loginDto = this.loginForm.value;
@@ -45,19 +44,18 @@ export class LoginComponent {
           if (response) {
             this.router.navigate(['/dashboard']);
           } else {
-            this.errorMessage = 'Invalid login credentials';
+            this.errorMessage = 'Invalid login credentials. Please try again.';
           }
         },
         (error) => {
-          // Handle error
           this.errorMessage = 'An error occurred during login: ' + error.message;
         }
       );
     } else {
-      // Form is invalid
       this.errorMessage = 'Please fill in all required fields correctly.';
     }
   }
+  
 
   onForgotPassword(): void {
     this.showForgotPasswordEmailInput = true;

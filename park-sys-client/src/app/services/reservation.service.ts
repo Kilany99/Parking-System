@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Environment } from '../../environments/environment';
 import { AuthService } from '../modules/auth/services/auth.service';
@@ -32,11 +32,18 @@ export class ReservationService {
     return this.http.get<number>(`${this.apiUrl}/${id}/fee`,{headers});
   }
 
-  cancelReservation(id: number): Observable<ReservationDto> {
-    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
-    return this.http.post<ReservationDto>(`${this.apiUrl}/${id}/cancel`,{headers})
+  calculateCnxFee(id: number): Observable<number> {
+ const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });    return this.http.get<number>(`${this.apiUrl}/${id}/cnx-fee`,{headers});
   }
 
+  cancelReservation(id: number): Observable<ReservationDto> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+    return this.http.post<ReservationDto>(`${this.apiUrl}/${id}/cancel`, {}, { headers });
+  }
   getActiveReservation(carId: number): Observable<ReservationDto> {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
     return this.http.get<ReservationDto>(`${this.apiUrl}/car/${carId}/active`,{headers});

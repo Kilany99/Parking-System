@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GridModule } from '@progress/kendo-angular-grid';
@@ -36,14 +36,17 @@ export class ReservationComponent implements OnInit {
   myReservations: ReservationDto[] = [];
   loading = false;
   showFeeDialog = false;
+  showCnxDialog = false;
+  selectedCnxResId : any = null;
   calculatedFee = 0;
   reservationForm: FormGroup;
   sort: any[] = [];
   availableCars: CarDto[] = [];
   availableParkingZones: ParkingZoneDto[] = [];
   availableParkingSpots : ParkingSpotDto [] = [];
-
-
+  selectedSpot: any = null;
+  errorMessage: string = '';
+  errorMessageResList:string = '';
   
   constructor(private formBuilder: FormBuilder,private reservationService: ReservationService,private carService: CarService
     ,private parkingZoneService: ParkingZoneService) {
@@ -80,7 +83,7 @@ export class ReservationComponent implements OnInit {
   }
   loadReservations(): void {
     this.loading = true;
-    // Call your reservation service to get reservations
+    // Call reservation service to get reservations
     this.reservationService.getMyReservations().subscribe({
       next: (reservations) => {
         if (Array.isArray(reservations)) {
@@ -102,7 +105,6 @@ export class ReservationComponent implements OnInit {
 
   calculateReservationFee(id: number): void {
     this.loading = true;
-    // Implement fee calculation logic
     this.reservationService.calculateFee(id).subscribe({
       next: (fee) => {
         this.calculatedFee = fee;
@@ -120,16 +122,38 @@ export class ReservationComponent implements OnInit {
 
   cancelReservation(id: number): void {
     this.loading = true;
-    // Implement cancellation logic
+    this.selectedCnxResId = id;
+    this.reservationService.calculateCnxFee(id).subscribe({
+      next: (fee) => {
+        this.calculatedFee = fee;
+      },
+      error: (error) => {
+        console.error('Error calculating fee:', error);
+      },
+      complete: () => {
+        this.showCnxDialog = true;
+        this.loading = false;
+      }
+   });
+   
+  }
+  onCnxButtonClick(id: number):void{
     this.reservationService.cancelReservation(id).subscribe({
       next: () => {
         this.loadReservations();
       },
       error: (error) => {
         console.error('Error cancelling reservation:', error);
+        
+        if (error.error?.error) {
+          this.errorMessageResList = error.error.error;
+        } else {
+          this.errorMessageResList = 'An unexpected error occurred. Please try again later.';
+        }
       },
       complete: () => {
         this.loading = false;
+        this.closeCnxDialog();
       }
     });
   }
@@ -142,7 +166,10 @@ export class ReservationComponent implements OnInit {
           this.myReservations.push(reservation);
         },
         error: (error) => {
+          if (error.error && error.error.error) {
           console.error('Error creating reservation:', error);
+          this.errorMessage = error.error.error;
+          }
         },
         complete: () => {
           this.loading = false;
@@ -152,7 +179,13 @@ export class ReservationComponent implements OnInit {
   }
 
   closeFeeDialog(): void {
+  
     this.showFeeDialog = false;
+  }
+  closeCnxDialog():void {
+    this.calculatedFee = 0;
+    this.selectedCnxResId = null;
+    this.showCnxDialog = false;
   }
 
   getAvailableCars(): void {
@@ -224,5 +257,34 @@ export class ReservationComponent implements OnInit {
       parkingSpotId: spot.id
     });
   }
+  getStatusColor(status: number): string {
+    switch (status) {
+        case 0: return 'orange'; // Reserved
+        case 1: return 'green';  // Active
+        case 2: return 'grey';   // Completed
+        case 3: return 'red';    // Cancelled
+        default: return 'black'; // Default color
+    }
+}
+
+
+
+get groupedSpots() {
+  return this.availableParkingSpots.reduce((acc: { [key: string]: any[] }, spot) => {
+    const match = spot.spotNumber.match(/F(\d+)S\d+/);
+    if (!match) return acc; // Handle cases where regex doesn't match
+
+    const floor = match[1]; // Extract floor number
+
+    if (!acc[floor]) acc[floor] = []; // Ensure array exists
+    acc[floor].push(spot); // Add spot to the corresponding floor
+
+    return acc;
+  }, {}); // Initialize acc as an empty object
+}
+isSelected(spot: any): boolean {
+  return this.selectedSpot?.spotNumber === spot.spotNumber;
+}
+
 
 }

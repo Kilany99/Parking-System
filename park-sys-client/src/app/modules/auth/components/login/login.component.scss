@@ -213,3 +213,14 @@ $kendo-theme-error: #e74c3c;
     }
   }
 }
+.error-message {
+  color: #d9534f; 
+  background-color: #f8d7da; 
+  border: 1px solid #d9534f;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  display: block;
+}
