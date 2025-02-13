@@ -14,7 +14,7 @@ export interface AuthResponseDto {
     token: string;
     email: string;
     name: string;
-    rol: string;
+    role: string;
 }
 
 export interface ForgotPasswordDto{

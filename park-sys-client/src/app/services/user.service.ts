@@ -32,7 +32,8 @@ export class UserService {
     );
   }
   createUser(user: CreateUserDto): Observable<UserDto> {
-    return this.http.post<UserDto>(this.apiUrl, user).pipe(catchError(this.handleError));
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.post<UserDto>(`${this.apiUrl}/create`, user,{headers}).pipe(catchError(this.handleError));
   }
   
 

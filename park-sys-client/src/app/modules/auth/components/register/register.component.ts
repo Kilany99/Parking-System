@@ -61,7 +61,8 @@ export class RegisterComponent {
         (response) => {
           if (response) {
             // Registration successful, navigate to dashboard or login
-            this.router.navigate(['/login']);
+            this.errorMessage ='Regestration successful';
+            this.router.navigate(['/auth/login']);
           } else {
             this.errorMessage = 'Registration failed';
           }

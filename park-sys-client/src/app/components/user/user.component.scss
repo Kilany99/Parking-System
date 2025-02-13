@@ -118,3 +118,14 @@
         }
     }
 }
+.error
+{
+    color: Red;
+    align-items: center;
+    display: block;
+    transition-duration: 100ms;
+    margin-top: 100px;
+    background-color: #e8d8d8;
+    padding: 20px;
+    max-width: 200px;
+}

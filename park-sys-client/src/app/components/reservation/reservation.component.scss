@@ -199,3 +199,10 @@ form {
         cursor: not-allowed;
     }
   }
+
+  .qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }

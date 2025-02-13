@@ -12,15 +12,16 @@ import { ContactComponent } from './components/contact/contact.component';
 import { FaqComponent } from './components/faq/faq.component';
 export const routes: Routes = [
    
-      { path: 'auth',loadChildren: () => import('./modules/auth/auth.module').then((m) => m.AuthModule),},
-      { path: 'cars', component: CarComponent, canActivate: [AuthGuard] },
-      { path: 'parking-zones', component: ParkingZoneComponent, canActivate: [AuthGuard] },
-      { path: 'payments', component: PaymentComponent, canActivate: [AuthGuard] },
-      { path: 'reservations', component: ReservationComponent, canActivate: [AuthGuard] },
-      { path: 'users', component: UserComponent, canActivate: [AuthGuard] }, 
-      { path: 'dashboard',component: DashboardComponent,canActivate: [AuthGuard],},
-      { path: 'aboutus',component: AboutUsComponent},
-      { path: 'contact',component: ContactComponent},
-      { path: 'faq',component: FaqComponent},
-      { path: '',component: LandingPageComponent},
+      { path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+      { path: 'cars', component: CarComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'User'] } },
+      { path: 'parking-zones', component: ParkingZoneComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+      { path: 'payments', component: PaymentComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+      { path: 'reservations', component: ReservationComponent, canActivate: [AuthGuard], data: { roles: ['Admin', 'User'] } },
+      { path: 'users', component: UserComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+      { path: 'aboutus', component: AboutUsComponent },
+      { path: 'contact', component: ContactComponent },
+      { path: 'faq', component: FaqComponent },
+      { path: '', component: LandingPageComponent },
+    
 ];

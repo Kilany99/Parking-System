@@ -9,6 +9,7 @@ export interface UserDto {
 export interface UpdateUserDto {
     name: string;
     phone: string;
+    role: string;
 }
 
 export interface CreateUserDto {

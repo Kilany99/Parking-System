@@ -26,11 +26,37 @@
         <kendo-grid-column field="exitTime" title="Exit Time" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="parkingSpot.spotNumber" title="Parking Spot" Width="100" [sortable]="true"></kendo-grid-column>
         <kendo-grid-column field="parkingZone.name" title="Parking Zone" Width="100" [sortable]="true"></kendo-grid-column>
+            <!-- QR Code Column -->
         <kendo-grid-column title="QR Code">
-            <ng-template kendoGridCellTemplate let-dataItem>
-              <img *ngIf="dataItem.qrCode" [src]="'data:image/png;base64,' + dataItem.qrCode" alt="QR Code" />
-            </ng-template>
-          </kendo-grid-column>
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="qr-container">
+              
+              <!-- Show QR code and button if reservation is NOT canceled -->
+              <ng-container *ngIf="dataItem.status !== 3; else cancelledTemplate">
+                <img *ngIf="dataItem.qrCode" 
+                    [src]="dataItem.qrCode" 
+                    alt="QR Code" 
+                    width="80" 
+                    height="80" />
+                <br>
+                <button *ngIf="dataItem.qrCode" kendoButton (click)="downloadQR(dataItem.qrCode, dataItem.id)">
+                  Download QR
+                </button>
+              </ng-container>
+
+              <!-- Template for cancelled reservations -->
+              <ng-template #cancelledTemplate>
+                <img src="assets/cancelled-placeholder.png" 
+                    alt="Reservation Cancelled" 
+                    width="80" 
+                    height="80" />
+                <p class="text-danger">Reservation Cancelled</p>
+              </ng-template>
+              
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
         <kendo-grid-column title="Actions" Width="200">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <button *ngIf="dataItem.status === 1" kendoButton (click)="calculateReservationFee(dataItem.id)">

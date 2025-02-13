@@ -11,13 +11,14 @@ import { CommonModule } from '@angular/common';
 
 export class NavigationComponent implements OnInit {
   isLoggedIn: boolean = false;
-
+  userRole = '';
   constructor(private authService: AuthService,private router : Router) {}
 
   ngOnInit(): void {
     this.authService.authStatus$.subscribe((status) => {
       this.isLoggedIn = status;
     });
+    this.userRole =this.authService.getUserRole();
   }
     logout(): void {
       this.authService.logout();
@@ -51,5 +52,6 @@ export class NavigationComponent implements OnInit {
     home(): void {
       this.router.navigate(['/']);
     }
+    
   
 } 

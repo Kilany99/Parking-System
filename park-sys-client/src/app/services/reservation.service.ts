@@ -67,6 +67,11 @@ export class ReservationService {
     const headers = { 'Authorization': `Bearer ${this.getToken()}` };
     return this.http.get(`${this.apiUrl}/today-activity`,{headers});
   }
+
+  getQRImage(qrCode: string): Observable<{ qrCode: string }> {
+    const headers = { 'Authorization': `Bearer ${this.getToken()}` };
+    return this.http.get<{ qrCode: string }>(`${this.apiUrl}/get-qr-image?qrCode=${qrCode}`,{headers});
+  }
   private getToken(): string {
     return this.token;
   }

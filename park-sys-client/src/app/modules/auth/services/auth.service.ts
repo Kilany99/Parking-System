@@ -14,6 +14,7 @@ providedIn: 'root'
 export class AuthService {
 private apiUrl = Environment.apiUrl;
 private tokenKey = 'token';
+private role = 'role';
 private authStatusListener = new BehaviorSubject<boolean>(this.isLoggedIn());
 private isBrowser: boolean;
 constructor(
@@ -38,6 +39,7 @@ get authStatus$(): Observable<boolean> {
       tap((response) => {
         if (response && response.token) {
           this.setToken(response.token);
+          this.setRole(response.role);
           this.authStatusListener.next(true);
         }
       }),
@@ -81,7 +83,11 @@ get authStatus$(): Observable<boolean> {
       localStorage.setItem(this.tokenKey, token);
     }
   }
-
+  setRole(role: string): void {
+    if (this.isBrowser) {
+      localStorage.setItem('role', role);
+    }
+  }
 getToken(): string | null {
   if (this.isBrowser) {
     return localStorage.getItem(this.tokenKey);
@@ -92,6 +98,10 @@ getToken(): string | null {
 removeToken(): void {
     if(this.isBrowser)
     localStorage.removeItem(this.tokenKey);
+}
+removeRole():void{
+  if(this.isBrowser)
+    localStorage.removeItem(this.role);
 }
 refreshToken(): Observable<AuthResponseDto> {
     const token = this.getToken();
@@ -133,6 +143,7 @@ refreshToken(): Observable<AuthResponseDto> {
   }
   logout(): void {
     this.removeToken();
+    this.removeRole();
     this.authStatusListener.next(false);
   }
 private isTokenExpired(token: string): boolean {
@@ -146,6 +157,12 @@ private isTokenExpired(token: string): boolean {
   }
   public getUserRole(): string {
     const decodedToken = this.getDecodedToken();
-    return decodedToken ? decodedToken.role : null;
+    if (!decodedToken) {
+      return "";
+    }
+    
+    // Check for both possible keys:
+    return decodedToken.role ||
+           decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "";
   }
 }

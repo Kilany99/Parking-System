@@ -88,6 +88,7 @@ export class ReservationComponent implements OnInit {
       next: (reservations) => {
         if (Array.isArray(reservations)) {
           this.myReservations = reservations;
+          this.loadQRCodeImages();
         } else {
           console.error('Invalid response format');
           this.myReservations = [];
@@ -267,6 +268,43 @@ export class ReservationComponent implements OnInit {
     }
 }
 
+loadQRCodeImages(): void {
+  this.myReservations.forEach((reservation) => {
+    if (reservation.qrCode) {
+      this.reservationService.getQRImage(reservation.qrCode).subscribe({
+        next: (response) => {
+          reservation.qrCode = response.qrCode; // Store the Base64 QR image
+        },
+        error: () => {
+          reservation.qrCode = ''; // Fallback for errors
+        },
+      });
+    }
+  });
+}
+downloadQR(qrCodeImage: string, reservationId: number): void {
+  if (!qrCodeImage) {
+    console.error("QR code image not available.");
+    return;
+  }
+
+  // Convert base64 string to a Blob
+  const byteCharacters = atob(qrCodeImage.split(',')[1]); // Remove data:image/png;base64
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: 'image/png' });
+
+  // Create a temporary link to download the blob
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = `QR_Code_Reservation_${reservationId}.png`; // File name
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 
 get groupedSpots() {

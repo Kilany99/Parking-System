@@ -11,6 +11,8 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import { AuthService } from '../../modules/auth/services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -38,10 +40,12 @@ export class UserComponent implements OnInit {
   public selectedUser: UserDto | null = null;
   public isNew: boolean = false;
   public isDialogOpen: boolean = false;
-
+  currentUser!: UserDto;
+  errorMessage:string = "";
   public userForm: FormGroup;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private authService: AuthService,
+    private router: Router) {
     // Initialize the form
     this.userForm = new FormGroup({
       id: new FormControl(null),
@@ -65,6 +69,7 @@ export class UserComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching users:', error);
+        this.errorMessage= ('Error fetching users');
       }
     );
   }
@@ -106,6 +111,8 @@ export class UserComponent implements OnInit {
           },
           (error) => {
             console.error('Error creating user:', error);
+            this.errorMessage= ('Error creating user');
+
           }
         );
       } else {
@@ -116,6 +123,7 @@ export class UserComponent implements OnInit {
           },
           (error) => {
             console.error('Error updating user:', error);
+            this.errorMessage= ('Error updating user');
           }
         );
       }
@@ -126,10 +134,19 @@ export class UserComponent implements OnInit {
     if (confirm(`Are you sure you want to delete user ${user.name}?`)) {
       this.userService.deleteUser(user.id).subscribe(
         () => {
-          this.loadUsers();
+          // If the deleted user is the currently logged-in user, log them out.
+          if (user.id === this.currentUser.id) {  
+            localStorage.removeItem('token'); // Remove the token
+            // Optionally, clear any other authentication state here
+            this.router.navigate(['/auth/login']); // Redirect to the login page
+          } else {
+            this.loadUsers(); // Otherwise, refresh the user list
+          }
         },
         (error) => {
           console.error('Error deleting user:', error);
+          this.errorMessage= ('Error deleting user' );
+
         }
       );
     }

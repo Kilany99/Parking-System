@@ -19,11 +19,18 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> {
-    if (this.authService.isLoggedIn()) //&& this.authService.getUserRole() === 'Admin') 
-    {
-      return true;
-    } else {
-      return this.router.createUrlTree(['/login']);
+    const isLoggedIn = this.authService.isLoggedIn();
+    const userRole = this.authService.getUserRole(); 
+
+    if (!isLoggedIn) {
+      return this.router.createUrlTree(['/auth/login']); // Redirect to login if not logged in
     }
+
+    const requiredRoles: string[] = next.data['roles']; // Get roles from route data
+    if (requiredRoles && !requiredRoles.includes(userRole)) {
+      return this.router.createUrlTree(['/']); // Redirect unauthorized users
+    }
+
+    return true; // Allow access if conditions are met
   }
 }

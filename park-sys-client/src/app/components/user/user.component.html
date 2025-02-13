@@ -21,7 +21,10 @@
         </ng-template>
       </kendo-grid-command-column>
     </kendo-grid>
-  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
     <!-- User Dialog -->
     <kendo-dialog *ngIf="isDialogOpen" (close)="closeDialog()">
       <ng-template kendoDialogTitle>
